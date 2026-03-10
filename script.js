@@ -45,34 +45,99 @@ toggle.innerHTML=document.body.classList.contains("light")
 };
 
 /* particles */
-const c=document.getElementById("particles");
-const ctx=c.getContext("2d");
-function resize(){c.width=innerWidth;c.height=innerHeight;}
-resize();window.onresize=resize;
+/* =========================
+   Particle System
+========================= */
 
-let p=[];
-for(let i=0;i<220;i++){   // increased particles
-p.push({
+const c = document.getElementById("particles");
+const ctx = c.getContext("2d");
+
+function resize(){
+c.width = innerWidth;
+c.height = innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+let mouse = {x:null,y:null};
+
+document.addEventListener("mousemove",e=>{
+mouse.x = e.clientX;
+mouse.y = e.clientY;
+});
+
+let particles=[];
+const COUNT = 200;
+
+for(let i=0;i<COUNT;i++){
+particles.push({
 x:Math.random()*c.width,
 y:Math.random()*c.height,
-dx:(Math.random()-.5)*0.7,
-dy:(Math.random()-.5)*0.7,
-r:Math.random()*2.2
+dx:(Math.random()-0.5)*0.6,
+dy:(Math.random()-0.5)*0.6,
+r:Math.random()*2+0.6
 });
 }
 
 function draw(){
+
 ctx.clearRect(0,0,c.width,c.height);
-ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--accent');
-p.forEach(o=>{
-o.x+=o.dx;
-o.y+=o.dy;
-ctx.beginPath();
-ctx.arc(o.x,o.y,o.r,0,6.28);
-ctx.fill();
-});
-requestAnimationFrame(draw);
+
+const isLight = document.body.classList.contains("light");
+
+particles.forEach(p=>{
+
+p.x += p.dx;
+p.y += p.dy;
+
+if(p.x < 0 || p.x > c.width) p.dx *= -1;
+if(p.y < 0 || p.y > c.height) p.dy *= -1;
+
+/* cursor repel */
+
+if(mouse.x){
+
+let dx = p.x - mouse.x;
+let dy = p.y - mouse.y;
+let dist = Math.sqrt(dx*dx + dy*dy);
+
+if(dist < 120){
+
+p.x += dx/dist * 2;
+p.y += dy/dist * 2;
+
 }
+
+}
+
+/* particle colors */
+
+let color;
+
+if(isLight){
+
+const colors = ["#f97316","#22c55e","#a855f7"]; 
+color = colors[Math.floor(Math.random()*colors.length)];
+
+}else{
+
+color = "#a855f7"; // purple neon for dark
+
+}
+
+/* draw particle */
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle = color;
+ctx.fill();
+
+});
+
+requestAnimationFrame(draw);
+
+}
+
 draw();
 
 /* tilt */
