@@ -466,3 +466,60 @@ border-color:var(--accent);
 transform:translateY(-8px);
 box-shadow:0 0 30px var(--glow);
 }
+/* =========================
+   Mobile Responsive
+========================= */
+
+@media(max-width:768px){
+
+.nav{
+padding:15px 20px;
+flex-direction:column;
+gap:10px;
+}
+
+.navLinks{
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+}
+
+.heroWrap{
+flex-direction:column;
+text-align:center;
+gap:30px;
+}
+
+.profile{
+width:180px;
+height:180px;
+}
+
+.eduCard{
+flex-direction:column;
+text-align:center;
+}
+
+.eduCard img{
+width:100%;
+max-width:300px;
+}
+
+.grid{
+gap:18px;
+}
+
+.skillCard{
+width:120px;
+}
+
+.projectCard{
+width:100%;
+max-width:320px;
+}
+
+#spotlight{
+display:none; /* improves performance on mobile */
+}
+
+}
