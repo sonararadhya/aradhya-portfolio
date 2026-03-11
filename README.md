@@ -4,7 +4,7 @@ My project is modern interactive developer portfolio website built using JavaScr
 
 The application focuses on interactive UI design and smooth user experience, integrating dynamic particle animations, responsive layouts, and theme switching between light and dark modes. These features enhance visual appeal while maintaining performance and usability across different devices.
 
-The portfolio includes sections for projects, skills, about information, and contact, allowing developers to present their work in a structured and engaging format. The responsive design ensures compatibility across desktops, tablets, and mobile devices.
+The portfolio includes sections for projects, skills, about information, and contact, allowing me to present my work in a structured and engaging format. The responsive design ensures compatibility across desktops, tablets, and mobile devices.
 
 This project demonstrates key frontend development concepts, including:
 
@@ -15,3 +15,6 @@ This project demonstrates key frontend development concepts, including:
 - Component-based UI structure
 
 Overall, the project serves as a professional online presence for developers, highlighting their technical abilities and projects while showcasing practical frontend development skills.
+
+
+ARADHYA SONAR
