@@ -44,6 +44,43 @@ toggle.innerHTML=document.body.classList.contains("light")
 :'<i class="ri-sun-line"></i>';
 };
 
+document.addEventListener("contextmenu", e => {
+e.preventDefault();
+});
+
+document.addEventListener("keydown", function(e) {
+
+if (e.key === "F12") {
+e.preventDefault();
+}
+
+if (e.ctrlKey && e.shiftKey && e.key === "I") {
+e.preventDefault();
+}
+
+if (e.ctrlKey && e.shiftKey && e.key === "J") {
+e.preventDefault();
+}
+
+if (e.ctrlKey && e.key === "U") {
+e.preventDefault();
+}
+
+});
+
+setInterval(function(){
+
+const devtoolsOpen =
+window.outerWidth - window.innerWidth > 160 ||
+window.outerHeight - window.innerHeight > 160;
+
+if(devtoolsOpen){
+document.body.innerHTML="";
+}
+
+},1000);
+
+
 /* particles */
 /* =========================
    Particle System
