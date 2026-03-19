@@ -236,8 +236,8 @@ async function sendVisitorData() {
         "Authorization": `Bearer ${SUPABASE_KEY}`
       },
       body: JSON.stringify({
-        device: navigator.platform,
-        browser: navigator.userAgent,
+        device: getDeviceType(),
+        browser: getBrowser(),
         page: window.location.pathname,
         country: "India",
         time: new Date()
@@ -255,6 +255,39 @@ window.addEventListener("load", () => {
   console.log("Page loaded 🚀");   // debug check
   sendVisitorData();
 });
+
+
+
+/* =========================
+   Device + Browser Detection
+========================= */
+
+function getDeviceType() {
+  const ua = navigator.userAgent;
+
+  if (/android/i.test(ua)) return "Android Phone";
+  if (/iPhone|iPad|iPod/i.test(ua)) return "iOS Device";
+  if (/Windows/i.test(ua)) return "Windows Laptop/Desktop";
+  if (/Mac/i.test(ua)) return "MacBook / iMac";
+  if (/Linux/i.test(ua)) return "Linux Laptop/Desktop";
+
+  return "Unknown Device";
+}
+
+function getBrowser() {
+  const ua = navigator.userAgent;
+
+  if (ua.includes("Chrome")) return "Chrome";
+  if (ua.includes("Firefox")) return "Firefox";
+  if (ua.includes("Safari") && !ua.includes("Chrome")) return "Safari";
+  if (ua.includes("Edge")) return "Edge";
+
+  return "Unknown Browser";
+}
+
+
+
+
 
 /* ===========================
    GitHub Projects Loader
