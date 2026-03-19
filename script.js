@@ -228,6 +228,11 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 async function sendVisitorData() {
   try {
+     
+    const parser = new UAParser();
+    const result = parser.getResult();
+    const geo = await fetch("https://ipapi.co/json/")
+     .then(res => res.json());
     const res = await fetch(`${SUPABASE_URL}/rest/v1/visitors`, {
       method: "POST",
       headers: {
@@ -235,13 +240,14 @@ async function sendVisitorData() {
         "apikey": SUPABASE_KEY,
         "Authorization": `Bearer ${SUPABASE_KEY}`
       },
-      body: JSON.stringify({
-        device: getDeviceType(),
-        browser: getBrowser(),
+     body: JSON.stringify({
+        device: result.device.model || result.device.type || result.os.name || "Desktop",
+        browser: result.browser.name || "Unknown Browser",
+        os: result.os.name,                 // ✅ NEW
         page: window.location.pathname,
-        country: "India",
+        country: geo.country_name || "Unknown",
         time: new Date()
-      })
+})
     });
 
     console.log("Visitor stored ✅", res.status);
@@ -255,38 +261,6 @@ window.addEventListener("load", () => {
   console.log("Page loaded 🚀");   // debug check
   sendVisitorData();
 });
-
-
-
-/* =========================
-   Device + Browser Detection
-========================= */
-
-function getDeviceType() {
-  const ua = navigator.userAgent;
-
-  if (/android/i.test(ua)) return "Android Phone";
-  if (/iPhone|iPad|iPod/i.test(ua)) return "iOS Device";
-  if (/Windows/i.test(ua)) return "Windows Laptop/Desktop";
-  if (/Mac/i.test(ua)) return "MacBook / iMac";
-  if (/Linux/i.test(ua)) return "Linux Laptop/Desktop";
-
-  return "Unknown Device";
-}
-
-function getBrowser() {
-  const ua = navigator.userAgent;
-
-  if (ua.includes("Chrome")) return "Chrome";
-  if (ua.includes("Firefox")) return "Firefox";
-  if (ua.includes("Safari") && !ua.includes("Chrome")) return "Safari";
-  if (ua.includes("Edge")) return "Edge";
-
-  return "Unknown Browser";
-}
-
-
-
 
 
 /* ===========================
