@@ -44,7 +44,7 @@ toggle.innerHTML=document.body.classList.contains("light")
 :'<i class="ri-sun-line"></i>';
 };
 
-/*
+
 document.addEventListener("contextmenu", e => {
 e.preventDefault();
 });
@@ -68,7 +68,6 @@ e.preventDefault();
 }
 
 });
-*/
 
 /* particles */
 /* =========================
