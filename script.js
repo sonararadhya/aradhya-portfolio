@@ -252,10 +252,7 @@ async function sendVisitorData() {
         os: navigator.platform,
         page: window.location.pathname,
         country: country,
-       const now = new Date();
-          const istTime = now.toLocaleString("en-IN", {
-              timeZone: "Asia/Kolkata"
-            });
+        created_at: new Date().toISOString()
       })
     });
 
