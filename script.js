@@ -151,9 +151,9 @@ document.addEventListener("mousemove", e => {
 
 // BACKGROUND SCENE
 const canvasBg = document.getElementById("particles");
-const rendererBg = new THREE.WebGLRenderer({ canvas: canvasBg, alpha: true, antialias: false });
+const rendererBg = new THREE.WebGLRenderer({ canvas: canvasBg, alpha: true, antialias: true });
 rendererBg.setSize(window.innerWidth, window.innerHeight);
-rendererBg.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
+rendererBg.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 const sceneBg = new THREE.Scene();
 const cameraBg = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -174,7 +174,7 @@ const createCircleTexture = () => {
 // Stars as a Sphere
 const isMobile = window.innerWidth < 768;
 const starsGeometry = new THREE.BufferGeometry();
-const starsCount = isMobile ? 250 : 700;
+const starsCount = isMobile ? 600 : 1500;
 const posArray = new Float32Array(starsCount * 3);
 const origPosArray = new Float32Array(starsCount * 3);
 const radiusRadius = 250;
@@ -214,9 +214,9 @@ const sceneObj = new THREE.Scene();
 const cameraObj = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 cameraObj.position.z = 10;
 
-const rendererObj = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+const rendererObj = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 rendererObj.setSize(window.innerWidth, window.innerHeight);
-rendererObj.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
+rendererObj.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 if(heroContainer) heroContainer.appendChild(rendererObj.domElement);
 
 const geometry = new THREE.IcosahedronGeometry(isMobile ? 1.6 : 2.5, 1);
@@ -333,9 +333,9 @@ if(skillsContainer) {
    const cameraSk = new THREE.PerspectiveCamera(45, skillsContainer.clientWidth / skillsContainer.clientHeight, 0.1, 100);
    cameraSk.position.z = 10;
    
-   const rendererSk = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+   const rendererSk = new THREE.WebGLRenderer({ alpha: true, antialias: true });
    rendererSk.setSize(skillsContainer.clientWidth, skillsContainer.clientHeight);
-   rendererSk.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
+   rendererSk.setPixelRatio(Math.min(window.devicePixelRatio, 2));
    skillsContainer.appendChild(rendererSk.domElement);
    
    // Advanced Gyroscope
