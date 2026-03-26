@@ -1117,6 +1117,11 @@ body {
       height: 180px;
    }
 
+   .profileWrapper {
+      width: 190px;
+      height: 190px;
+   }
+
    .eduCard {
       flex-direction: column;
       text-align: center;
