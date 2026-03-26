@@ -1,4 +1,16 @@
 /* =====================
+   PRELOADER
+===================== */
+window.addEventListener("load", () => {
+   const preloader = document.getElementById("preloader");
+   if(preloader) {
+      preloader.style.opacity = "0";
+      preloader.style.visibility = "hidden";
+      setTimeout(() => preloader.remove(), 800);
+   }
+});
+
+/* =====================
    TYPING EFFECT
 ===================== */
 const words = [
@@ -11,6 +23,7 @@ let i = 0, j = 0, del = false;
 
 function type() {
    let el = document.getElementById("typing");
+   if(!el) return;
    let w = words[i].text;
    el.style.color = words[i].color;
    if (!del) {
@@ -126,25 +139,51 @@ const sceneBg = new THREE.Scene();
 const cameraBg = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 cameraBg.position.z = 50;
 
-// Stars
+// Circular Particle Texture
+const createCircleTexture = () => {
+   const c = document.createElement("canvas");
+   c.width = 64; c.height = 64;
+   const ctx = c.getContext("2d");
+   ctx.beginPath();
+   ctx.arc(32, 32, 30, 0, Math.PI * 2);
+   ctx.fillStyle = "#ffffff";
+   ctx.fill();
+   return new THREE.CanvasTexture(c);
+};
+
+// Stars as a Sphere
 const isMobile = window.innerWidth < 768;
 const starsGeometry = new THREE.BufferGeometry();
 const starsCount = isMobile ? 600 : 1500;
 const posArray = new Float32Array(starsCount * 3);
 const origPosArray = new Float32Array(starsCount * 3);
+const radiusRadius = 250;
 
-for(let i = 0; i < starsCount * 3; i++) {
-   const val = (Math.random() - 0.5) * 300;
-   posArray[i] = val;
-   origPosArray[i] = val;
+for(let i = 0; i < starsCount; i++) {
+   const i3 = i * 3;
+   const rho = Math.acos(Math.random() * 2 - 1);
+   const theta = Math.random() * Math.PI * 2;
+   const r = Math.pow(Math.random(), 1/3) * radiusRadius;
+   const x = r * Math.sin(rho) * Math.cos(theta);
+   const y = r * Math.sin(rho) * Math.sin(theta);
+   const z = r * Math.cos(rho);
+   
+   posArray[i3] = x;
+   posArray[i3+1] = y;
+   posArray[i3+2] = z;
+   origPosArray[i3] = x;
+   origPosArray[i3+1] = y;
+   origPosArray[i3+2] = z;
 }
 starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 const starsMaterial = new THREE.PointsMaterial({
-   size: 0.8,
+   size: 1.5,
    color: 0xb874fe,
+   map: createCircleTexture(),
    transparent: true,
-   opacity: 0.8,
-   blending: THREE.AdditiveBlending
+   opacity: 0.9,
+   blending: THREE.AdditiveBlending,
+   depthWrite: false
 });
 const starMesh = new THREE.Points(starsGeometry, starsMaterial);
 sceneBg.add(starMesh);
@@ -160,22 +199,42 @@ rendererObj.setSize(window.innerWidth, window.innerHeight);
 rendererObj.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 if(heroContainer) heroContainer.appendChild(rendererObj.domElement);
 
-// Icosahedron shape (scale down for mobile)
-const geometry = new THREE.IcosahedronGeometry(isMobile ? 1.6 : 2.2, 1);
-const materialSolid = new THREE.MeshStandardMaterial({
-   color: 0x6366f1,
-   roughness: 0.2,
-   metalness: 0.8,
-   transparent: true,
-   opacity: 0.8
-});
-const object3D = new THREE.Mesh(geometry, materialSolid);
-const wireframe = new THREE.LineSegments(
-   new THREE.WireframeGeometry(geometry),
-   new THREE.LineBasicMaterial({ color: 0xb874fe, transparent: true, opacity: 0.6 })
+// 3D MODERN LAPTOP
+const laptopGroup = new THREE.Group();
+
+// Laptop Base
+const baseGeom = new THREE.BoxGeometry(4.2, 0.15, 3);
+const baseMat = new THREE.MeshStandardMaterial({ color: 0x333344, roughness: 0.3, metalness: 0.8 });
+const base = new THREE.Mesh(baseGeom, baseMat);
+
+// Laptop Screen
+const screenGeom = new THREE.BoxGeometry(4.2, 2.6, 0.1);
+const screenMat = new THREE.MeshStandardMaterial({ color: 0x333344, roughness: 0.3, metalness: 0.8 });
+const screen = new THREE.Mesh(screenGeom, screenMat);
+screen.position.set(0, 1.3, -1.45);
+screen.rotation.x = -0.15; // open angle
+
+// Screen Display Glow
+const displayGeom = new THREE.PlaneGeometry(4.0, 2.4);
+const displayMat = new THREE.MeshBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.9 });
+const display = new THREE.Mesh(displayGeom, displayMat);
+display.position.set(0, 1.3, -1.39);
+display.rotation.x = -0.15;
+
+// Wireframe Accents
+const wireframeBase = new THREE.LineSegments(
+   new THREE.WireframeGeometry(baseGeom),
+   new THREE.LineBasicMaterial({ color: 0xb874fe, transparent: true, opacity: 0.4 })
 );
-object3D.add(wireframe);
-sceneObj.add(object3D);
+base.add(wireframeBase);
+
+laptopGroup.add(base);
+laptopGroup.add(screen);
+laptopGroup.add(display);
+
+if(isMobile) laptopGroup.scale.set(0.6, 0.6, 0.6);
+laptopGroup.position.y = -0.5;
+sceneObj.add(laptopGroup);
 
 // Lights for Hero Object
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -184,10 +243,10 @@ const pointLight = new THREE.PointLight(0xa855f7, 2, 50);
 pointLight.position.set(5, 5, 5);
 sceneObj.add(pointLight);
 
-// Setup GSAP scroll tied to 3D object rotation
+// Setup GSAP scroll tied to Laptop Y translation (float up)
 if (typeof gsap !== 'undefined') {
-   gsap.to(object3D.rotation, {
-      y: Math.PI * 2,
+   gsap.to(laptopGroup.position, {
+      y: 1.5,
       scrollTrigger: {
          trigger: ".hero",
          start: "top top",
@@ -234,12 +293,10 @@ function animate3D() {
    }
    starsGeometry.attributes.position.needsUpdate = true;
 
-   // Animate centerpiece
-   object3D.rotation.y += 0.005;
-   object3D.rotation.x += 0.002;
-   // subtle mouse follow
-   object3D.position.x += (targetMouse.x * 1.5 - object3D.position.x) * 0.05;
-   object3D.position.y += (targetMouse.y * 1.5 - object3D.position.y) * 0.05;
+   // Animate centerpiece Laptop Interactive 360 Full Rotation
+   laptopGroup.rotation.y += (targetMouse.x * Math.PI - laptopGroup.rotation.y) * 0.05;
+   laptopGroup.rotation.x += ((0.2 + targetMouse.y * 0.5) - laptopGroup.rotation.x) * 0.05;
+   laptopGroup.rotation.z = Math.sin(elapsedTime) * 0.05; // hover breathing
 
    rendererBg.render(sceneBg, cameraBg);
    if(heroContainer) rendererObj.render(sceneObj, cameraObj);
@@ -282,17 +339,24 @@ if(skillsContainer && !isMobile) {
    rendererSk.setPixelRatio(Math.min(window.devicePixelRatio, 2));
    skillsContainer.appendChild(rendererSk.domElement);
    
-   const torusGeom = new THREE.TorusKnotGeometry(1.5, 0.4, 100, 16);
-   const torusMat = new THREE.MeshStandardMaterial({
-      color: 0xec4899,
-      roughness: 0.1,
-      metalness: 0.8,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.7
-   });
-   const torus = new THREE.Mesh(torusGeom, torusMat);
-   sceneSk.add(torus);
+   // Advanced Gyroscope
+   const gyroGroup = new THREE.Group();
+   const mat = new THREE.MeshStandardMaterial({ color: 0xec4899, wireframe: true, transparent: true, opacity: 0.8 });
+   
+   const ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.6, 0.1, 16, 100), mat);
+   const ring2 = new THREE.Mesh(new THREE.TorusGeometry(1.2, 0.1, 16, 100), mat);
+   const ring3 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.1, 16, 100), mat);
+   const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.4, 0), new THREE.MeshStandardMaterial({color: 0x6366f1, metalness: 0.9}));
+   
+   ring2.rotation.x = Math.PI / 2;
+   ring3.rotation.y = Math.PI / 2;
+   
+   gyroGroup.add(ring1);
+   gyroGroup.add(ring2);
+   gyroGroup.add(ring3);
+   gyroGroup.add(core);
+
+   sceneSk.add(gyroGroup);
    
    const light2 = new THREE.PointLight(0xa855f7, 2, 50);
    light2.position.set(5, 5, 5);
@@ -300,10 +364,12 @@ if(skillsContainer && !isMobile) {
    
    function animateSk() {
       requestAnimationFrame(animateSk);
-      torus.rotation.x += 0.01;
-      torus.rotation.y += 0.01;
-      torus.position.x += (targetMouse.x * 2 - torus.position.x) * 0.1;
-      torus.position.y += (targetMouse.y * 2 - torus.position.y) * 0.1;
+      ring1.rotation.x += 0.01; ring1.rotation.y += 0.02;
+      ring2.rotation.x -= 0.02; ring2.rotation.y += 0.01;
+      ring3.rotation.z += 0.03; core.rotation.y -= 0.05;
+      
+      gyroGroup.position.x += (targetMouse.x * 1.5 - gyroGroup.position.x) * 0.1;
+      gyroGroup.position.y += (targetMouse.y * 1.5 - gyroGroup.position.y) * 0.1;
       rendererSk.render(sceneSk, cameraSk);
    }
    animateSk();
@@ -359,9 +425,9 @@ function apply3DTilt(selector) {
          const r = card.getBoundingClientRect();
          const x = e.clientX - r.left;
          const y = e.clientY - r.top;
-         const rotateX = -((y - r.height / 2) / r.height) * 15;
-         const rotateY = ((x - r.width / 2) / r.width) * 15;
-         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+         const rotateX = -((y - r.height / 2) / r.height) * 180;
+         const rotateY = ((x - r.width / 2) / r.width) * 180;
+         card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.1, 1.1, 1.1)`;
       });
       card.addEventListener("mouseleave", () => {
          card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
@@ -475,14 +541,14 @@ async function loadProjects() {
       const repos = await res.json();
 
       repos
-         .filter(repo => !repo.fork)
+         .filter(repo => !repo.fork && !['sonararadhya', 'Laptop-settings'].includes(repo.name))
          .sort((a, b) => b.stargazers_count - a.stargazers_count)
          .slice(0, 8)
          .forEach(repo => {
             const card = document.createElement("div");
             card.className = "projectCard";
             card.innerHTML = `
-<img class="projectImage" src="https://opengraph.githubassets.com/1/${githubUser}/${repo.name}" alt="Preview" loading="lazy">
+<img class="projectImage" src="https://opengraph.githubassets.com/1/${githubUser}/${repo.name}" onerror="this.src='Images/profile1.jpg'" alt="Preview" loading="lazy">
 <h3>${repo.name}</h3>
 <p>${repo.description || "Project repository"}</p>
 <div class="tech">

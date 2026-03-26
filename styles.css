@@ -1266,3 +1266,48 @@ body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn {
    border-top: 1px solid rgba(255,255,255,0.2) !important;
    border-left: 1px solid rgba(255,255,255,0.1) !important;
 }
+
+/* =====================
+   PRELOADER
+===================== */
+#preloader {
+   position: fixed;
+   top: 0; left: 0;
+   width: 100%; height: 100%;
+   background: #020005;
+   z-index: 100000;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loader-ring {
+   width: 70px;
+   height: 70px;
+   border: 3px solid transparent;
+   border-top-color: var(--accent);
+   border-right-color: #ec4899;
+   border-radius: 50%;
+   animation: spin 1s linear infinite;
+   box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+/* =====================
+   360 TILT ENHANCEMENTS
+===================== */
+.card, .eduCard, .workCard, .projectCard {
+   transform-style: preserve-3d;
+}
+
+.card > *, .eduCard > *, .workCard > *, .projectCard > * {
+   transform: translateZ(30px);
+}
+
+.projectCard::before {
+   transform: translateZ(-10px);
+}
+
+.projectImage {
+   transform: translateZ(40px);
+}
