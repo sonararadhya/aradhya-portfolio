@@ -1,21 +1,4 @@
 /* =====================
-   LENIS SMOOTH SCROLL
-===================== */
-if (typeof Lenis !== 'undefined') {
-   const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true
-   });
-   function raf(time) {
-      lenis.raf(time);
-      if(typeof ScrollTrigger !== 'undefined') ScrollTrigger.update();
-      requestAnimationFrame(raf);
-   }
-   requestAnimationFrame(raf);
-}
-
-/* =====================
    MAGNETIC BUTTONS
 ===================== */
 document.addEventListener("DOMContentLoaded", () => {
