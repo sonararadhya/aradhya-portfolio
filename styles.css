@@ -909,22 +909,61 @@ body {
 /* =====================
    WORK CARDS
 ===================== */
-.workGrid {
+.timeline {
+   position: relative;
+   max-width: 900px;
+   margin: 40px auto 0;
+   padding: 20px 0;
+}
+
+.timeline::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 50%;
+   width: 2px;
+   height: 100%;
+   background: var(--glass-border);
+   transform: translateX(-50%);
+}
+
+.timeline-item {
    display: flex;
-   justify-content: center;
-   gap: 35px;
-   flex-wrap: wrap;
-   margin-top: 40px;
+   justify-content: flex-end;
+   padding-right: 50%;
+   position: relative;
+   margin-bottom: 40px;
+}
+
+.timeline-item:nth-child(even) {
+   justify-content: flex-start;
+   padding-right: 0;
+   padding-left: 50%;
+}
+
+.timeline-dot {
+   position: absolute;
+   top: 20px;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 16px;
+   height: 16px;
+   border-radius: 50%;
+   background: var(--accent);
+   border: 4px solid var(--bg);
+   box-shadow: 0 0 10px var(--glow);
+   z-index: 1;
 }
 
 .workCard {
    background: var(--card);
-   width: 420px;
-   min-height: 280px;
+   backdrop-filter: blur(14px);
+   width: calc(100% - 40px);
+   max-width: 420px;
    padding: 30px;
    border-radius: 18px;
    text-align: left;
-   border: 1px solid transparent;
+   border: 1px solid var(--glass-border);
    transition: .4s;
    position: relative;
    overflow: hidden;
@@ -1126,4 +1165,104 @@ body {
    .statItem:not(:last-child)::after {
       display: none;
    }
+
+   .timeline::before {
+      left: 20px;
+   }
+   .timeline-item {
+      justify-content: flex-start;
+      padding-right: 0;
+      padding-left: 50px;
+   }
+   .timeline-item:nth-child(even) {
+      padding-left: 50px;
+   }
+   .timeline-dot {
+      left: 20px;
+   }
+   .workCard {
+      width: 100%;
+      max-width: none;
+   }
+}
+
+/* =====================
+   CURSOR & LOADER & SKILLS 3D
+===================== */
+body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn { 
+   cursor: none !important; 
+}
+
+.cursor-dot {
+   position: fixed;
+   top: 0; left: 0;
+   width: 6px; height: 6px;
+   background: var(--accent);
+   border-radius: 50%;
+   pointer-events: none;
+   z-index: 9999;
+   transform: translate(-50%, -50%);
+   transition: width 0.3s, height 0.3s;
+}
+
+.cursor-outline {
+   position: fixed;
+   top: 0; left: 0;
+   width: 40px; height: 40px;
+   border: 1px solid var(--accent);
+   border-radius: 50%;
+   pointer-events: none;
+   z-index: 9998;
+   transform: translate(-50%, -50%);
+   transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+.profileWrapper {
+   position: relative;
+   width: 250px;
+   height: 250px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.profileLoader {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   border-radius: 50%;
+   border: 3px solid transparent;
+   border-top-color: var(--accent);
+   border-bottom-color: #ec4899;
+   animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+@keyframes spin {
+   0% { transform: rotate(0deg) scale(1.1); opacity: 0; }
+   50% { opacity: 1; transform: rotate(180deg) scale(1.05); }
+   100% { transform: rotate(360deg) scale(1.1); opacity: 0; }
+}
+
+#skills-3d-container {
+   width: 100%;
+   height: 350px;
+   margin-bottom: -40px;
+   position: relative;
+   z-index: 0;
+   pointer-events: none;
+}
+
+.projectImage {
+   width: 100%;
+   height: 140px;
+   object-fit: cover;
+   border-radius: 12px;
+   margin-bottom: 15px;
+   border: 1px solid var(--glass-border);
+}
+
+.better-glass {
+   background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+   border-top: 1px solid rgba(255,255,255,0.2) !important;
+   border-left: 1px solid rgba(255,255,255,0.1) !important;
 }

@@ -32,6 +32,10 @@
     <div></div>
   </div>
 
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+
   <div id="spotlight"></div>
   <button id="topBtn">^</button>
 
@@ -63,8 +67,11 @@
 
     <div class="heroWrap">
 
-      <div class="profile">
-        <img src="Images/profile1.jpg">
+      <div class="profileWrapper">
+        <div class="profileLoader"></div>
+        <div class="profile">
+          <img src="Images/profile1.jpg">
+        </div>
       </div>
 
       <div class="heroText">
@@ -131,6 +138,7 @@
 
   <!-- SKILLS -->
   <section id="skills" class="section">
+    <div id="skills-3d-container"></div>
     <h2>My Skills</h2>
     <p class="skillsHint">Hover over a card to see details</p>
     <div class="skillsGrid">
@@ -356,35 +364,36 @@
   <section id="work" class="section">
     <h2>Work Experience</h2>
 
-    <div class="workGrid">
-
-      <div class="workCard">
-        <h3>CodTech IT Solutions Pvt Ltd</h3>
-        <h4>Intern – MERN Stack Development</h4>
-        <ul>
-          <li>Developed <b>Bargain.com</b>, a full-stack price negotiation marketplace using the MERN stack.</li>
-          <li>Implemented real-time price bargaining using an interactive negotiation slider between buyers and sellers.
-          </li>
-          <li>Built authentication systems for users and sellers with secure login and account management.</li>
-          <li>Created product listing features with image uploads, cart management, and order confirmation workflow.
-          </li>
-          <li>Developed scalable REST APIs using <b>Node.js</b> and <b>Express.js</b> and integrated <b>MongoDB</b> for
-            product and transaction data.</li>
-          <li>Designed a responsive React UI with particle animations and a yellow-purple themed interface.</li>
-        </ul>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="workCard">
+          <h3>CodTech IT Solutions Pvt Ltd</h3>
+          <h4>Intern – MERN Stack Development</h4>
+          <ul>
+            <li>Developed <b>Bargain.com</b>, a full-stack price negotiation marketplace using the MERN stack.</li>
+            <li>Implemented real-time price bargaining using an interactive negotiation slider between buyers and sellers.</li>
+            <li>Built authentication systems for users and sellers with secure login and account management.</li>
+            <li>Created product listing features with image uploads, cart management, and order confirmation workflow.</li>
+            <li>Developed scalable REST APIs using <b>Node.js</b> and <b>Express.js</b> and integrated <b>MongoDB</b> for product and transaction data.</li>
+            <li>Designed a responsive React UI with particle animations and a yellow-purple themed interface.</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="workCard">
-        <h3>Om Multitherm Engineers Pvt Ltd</h3>
-        <h4>Industrial Training – Database Handling</h4>
-        <ul>
-          <li>Worked on managing and organizing company data using structured database systems.</li>
-          <li>Handled database records, data entry, and data validation for internal operations.</li>
-          <li>Assisted in maintaining structured data storage and improving database organization.</li>
-          <li>Supported database management tasks related to industrial production data.</li>
-        </ul>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="workCard">
+          <h3>Om Multitherm Engineers Pvt Ltd</h3>
+          <h4>Industrial Training – Database Handling</h4>
+          <ul>
+            <li>Worked on managing and organizing company data using structured database systems.</li>
+            <li>Handled database records, data entry, and data validation for internal operations.</li>
+            <li>Assisted in maintaining structured data storage and improving database organization.</li>
+            <li>Supported database management tasks related to industrial production data.</li>
+          </ul>
+        </div>
       </div>
-
     </div>
   </section>
 
