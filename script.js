@@ -592,81 +592,21 @@ async function sendVisitorData() {
 window.addEventListener("load", () => {
    console.log("Page loaded 🚀");
    sendVisitorData();
-   /* =====================
-   CONTACT 3D LIQUID OCEAN
+/* =====================
+   CONTACT WATER RIPPLE EFFECT 
 ===================== */
-const contactSec = document.getElementById('contact');
-const contactContent = document.querySelector('.contactContent');
-if(contactSec) {
-   // Inject dedicated webgl container layer under the form
-   const waterContainer = document.createElement('div');
-   waterContainer.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;';
-   contactSec.insertBefore(waterContainer, contactContent);
-
-   const sceneWt = new THREE.Scene();
-   const cameraWt = new THREE.PerspectiveCamera(45, contactSec.clientWidth / contactSec.clientHeight, 0.1, 100);
-   cameraWt.position.z = 15;
-   cameraWt.position.y = -8;
-   cameraWt.lookAt(0, 0, 0);
-   
-   const rendererWt = new THREE.WebGLRenderer({ alpha: true, antialias: false });
-   rendererWt.setSize(contactSec.clientWidth, contactSec.clientHeight);
-   rendererWt.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
-   waterContainer.appendChild(rendererWt.domElement);
-
-   const geoWt = new THREE.PlaneGeometry(60, 40, 60, 40);
-   geoWt.rotateX(-Math.PI / 2);
-   const matWt = new THREE.MeshBasicMaterial({ color: 0x6366f1, wireframe: true, transparent: true, opacity: 0.15 });
-   const waterMesh = new THREE.Mesh(geoWt, matWt);
-   sceneWt.add(waterMesh);
-
-   const positionsData = waterMesh.geometry.attributes.position;
-   const originalZ = [];
-   for(let i=0; i<positionsData.count; i++) originalZ.push(positionsData.getZ(i));
-
-   let waterDrops = [];
-   contactSec.addEventListener('mousemove', e => {
-      const rect = contactSec.getBoundingClientRect();
-      const nx = (e.clientX - rect.left) / rect.width * 2 - 1;
-      const ny = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-      
-      waterDrops.push({ x: nx * 30, z: -ny * 20, time: 0, power: 1.5 });
-      if(waterDrops.length > 5) waterDrops.shift(); 
+// Real-world water surface tension shader using jquery.ripples
+if (typeof jQuery !== 'undefined' && $.fn.ripples) {
+   $('#contact').ripples({
+      resolution: 512,
+      dropRadius: 20,
+      perturbance: 0.04,
+      interactive: true,
+      crossOrigin: "anonymous"
    });
-
-   let obsWtHit = false;
-   new IntersectionObserver(e => obsWtHit = e[0].isIntersecting).observe(contactSec);
-
-   function animateWater() {
-      requestAnimationFrame(animateWater);
-      if(!obsWtHit) return;
-
-      for(let i=0; i<waterDrops.length; i++) waterDrops[i].time += 0.08;
-      
-      for(let i=0; i<positionsData.count; i++) {
-         const px = positionsData.getX(i);
-         const pz = positionsData.getZ(i);
-         let waveDisp = 0;
-         for(let d=0; d<waterDrops.length; d++) {
-             const drop = waterDrops[d];
-             const dist = Math.sqrt(Math.pow(px - drop.x, 2) + Math.pow(pz - drop.z, 2));
-             if(dist < drop.time * 20 && dist > 0.1) {
-                const ring = Math.sin(dist - drop.time * 10);
-                waveDisp += (ring * drop.power) / (dist * 0.5 + 1);
-             }
-         }
-         positionsData.setY(i, waveDisp);
-      }
-      positionsData.needsUpdate = true;
-      rendererWt.render(sceneWt, cameraWt);
-   }
-   animateWater();
    
-   window.addEventListener('resize', () => {
-      cameraWt.aspect = contactSec.clientWidth / contactSec.clientHeight;
-      cameraWt.updateProjectionMatrix();
-      rendererWt.setSize(contactSec.clientWidth, contactSec.clientHeight);
-   });
+   // Keep ripples contained smoothly within the dark space backdrop
+   $('#contact').css('background-image', 'url("https://images.unsplash.com/photo-1534796636912-3652f50411a5?q=80&w=2000&auto=format&fit=crop")');
 }
 });
 
