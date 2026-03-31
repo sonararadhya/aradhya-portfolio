@@ -142,7 +142,7 @@ document.addEventListener("mousemove", e => {
 const canvasBg = document.getElementById("particles");
 const rendererBg = new THREE.WebGLRenderer({ canvas: canvasBg, alpha: true, antialias: false });
 rendererBg.setSize(window.innerWidth, window.innerHeight);
-rendererBg.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+rendererBg.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
 
 const sceneBg = new THREE.Scene();
 const cameraBg = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -163,7 +163,7 @@ const createCircleTexture = () => {
 // Stars as a Sphere
 const isMobile = window.innerWidth < 768;
 const starsGeometry = new THREE.BufferGeometry();
-const starsCount = isMobile ? 600 : 1500;
+const starsCount = isMobile ? 300 : 800;
 const posArray = new Float32Array(starsCount * 3);
 const origPosArray = new Float32Array(starsCount * 3);
 const radiusRadius = 250;
@@ -203,9 +203,9 @@ const sceneObj = new THREE.Scene();
 const cameraObj = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 cameraObj.position.z = 10;
 
-const rendererObj = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+const rendererObj = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 rendererObj.setSize(window.innerWidth, window.innerHeight);
-rendererObj.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+rendererObj.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
 if(heroContainer) heroContainer.appendChild(rendererObj.domElement);
 
 const geometry = new THREE.IcosahedronGeometry(isMobile ? 1.6 : 2.5, 1);
@@ -408,9 +408,9 @@ function initSkillsScene() {
    const cameraSk = new THREE.PerspectiveCamera(45, skillsContainer.clientWidth / skillsContainer.clientHeight, 0.1, 100);
    cameraSk.position.z = 10;
    
-   const rendererSk = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+   const rendererSk = new THREE.WebGLRenderer({ alpha: true, antialias: false });
    rendererSk.setSize(skillsContainer.clientWidth, skillsContainer.clientHeight);
-   rendererSk.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+   rendererSk.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
    skillsContainer.appendChild(rendererSk.domElement);
    
    const gyroGroup = new THREE.Group();
@@ -592,6 +592,54 @@ async function sendVisitorData() {
 window.addEventListener("load", () => {
    console.log("Page loaded 🚀");
    sendVisitorData();
+   /* =====================
+   CONTACT RIPPLE EFFECT
+===================== */
+const rippleCanvas = document.getElementById('contactRipple');
+if(rippleCanvas) {
+   const ctxR = rippleCanvas.getContext('2d', { alpha: true });
+   let ripples = [];
+   const contactSec = document.getElementById('contact');
+   
+   function resizeRipple() {
+      rippleCanvas.width = contactSec.clientWidth;
+      rippleCanvas.height = contactSec.clientHeight;
+   }
+   window.addEventListener('resize', resizeRipple);
+   resizeRipple();
+
+   contactSec.addEventListener('mousemove', e => {
+      const rect = rippleCanvas.getBoundingClientRect();
+      ripples.push({
+         x: e.clientX - rect.left,
+         y: e.clientY - rect.top,
+         radius: 0,
+         maxRadius: Math.random() * 60 + 40,
+         alpha: 0.6
+      });
+   });
+
+   let lastRippleTime = 0;
+   function animateRipples(time) {
+      requestAnimationFrame(animateRipples);
+      if (time - lastRippleTime < 16) return; // limit to ~60fps
+      lastRippleTime = time;
+
+      ctxR.clearRect(0, 0, rippleCanvas.width, rippleCanvas.height);
+      for(let i=0; i<ripples.length; i++) {
+         const r = ripples[i];
+         ctxR.beginPath();
+         ctxR.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+         ctxR.strokeStyle = `rgba(168, 85, 247, ${r.alpha})`;
+         ctxR.lineWidth = 2.5;
+         ctxR.stroke();
+         r.radius += 3.5;
+         r.alpha -= 0.015;
+      }
+      ripples = ripples.filter(r => r.alpha > 0.01);
+   }
+   requestAnimationFrame(animateRipples);
+}
 });
 
 /* =====================
