@@ -748,34 +748,8 @@ body {
 }
 
 /* =====================
-   PROJECT CARDS & FILTER
+   PROJECT CARDS
 ===================== */
-.filterBar {
-   display: flex;
-   justify-content: center;
-   gap: 20px;
-   margin: 0 auto 40px auto;
-   flex-wrap: wrap;
-}
-
-.filterBtn {
-   background: transparent;
-   color: var(--text);
-   border: 2px solid var(--glass-border);
-   padding: 8px 20px;
-   border-radius: 30px;
-   cursor: pointer;
-   transition: all 0.3s;
-   font-size: 15px;
-   font-weight: 500;
-}
-
-.filterBtn:hover, .filterBtn.active {
-   border-color: var(--accent);
-   color: var(--accent);
-   box-shadow: 0 0 15px var(--accent);
-}
-
 .projectCard {
    background: var(--card);
    padding: 25px;
