@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 ===================== */
 window.addEventListener("load", () => {
    const preloader = document.getElementById("preloader");
-   if (preloader) {
+   if(preloader) {
       preloader.style.opacity = "0";
       preloader.style.visibility = "hidden";
       setTimeout(() => preloader.remove(), 800);
@@ -41,7 +41,7 @@ let i = 0, j = 0, del = false;
 
 function type() {
    let el = document.getElementById("typing");
-   if (!el) return;
+   if(!el) return;
    let w = words[i].text;
    el.style.color = words[i].color;
    if (!del) {
@@ -64,20 +64,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Reveal Sections
 document.querySelectorAll(".section, .card, .eduCard, .workCard").forEach(el => {
-   gsap.fromTo(el,
+   gsap.fromTo(el, 
       { opacity: 0, y: 80, scale: 0.95, rotationX: 5 },
-      {
-         opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 1, ease: "power3.out",
-         scrollTrigger: { trigger: el, start: "top 85%", once: true }
+      { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 1, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 85%", once: true }
       });
    el.classList.add("show");
 });
 document.querySelectorAll(".flipScene").forEach(el => {
-   gsap.fromTo(el,
+   gsap.fromTo(el, 
       { opacity: 0, y: 50, scale: 0.9 },
-      {
-         opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.5)",
-         scrollTrigger: { trigger: el, start: "top 85%", once: true }
+      { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.5)",
+        scrollTrigger: { trigger: el, start: "top 85%", once: true }
       });
    el.classList.add("show");
 });
@@ -110,6 +108,7 @@ if (statsStrip) {
    SCROLL BUTTON
 ===================== */
 const btn = document.getElementById("topBtn");
+
 btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
 /* =====================
@@ -123,18 +122,7 @@ toggle.onclick = () => {
       : '<i class="ri-sun-line"></i>';
 };
 
-/* =====================
-   DISABLE DEVTOOLS
-===================== */
-document.addEventListener("contextmenu", e => {
-   e.preventDefault();
-});
-document.addEventListener("keydown", function (e) {
-   if (e.key === "F12") { e.preventDefault(); }
-   if (e.ctrlKey && e.shiftKey && e.key === "I") { e.preventDefault(); }
-   if (e.ctrlKey && e.shiftKey && e.key === "J") { e.preventDefault(); }
-   if (e.ctrlKey && e.key === "U") { e.preventDefault(); }
-});
+
 
 /* =====================
    THREE.JS COSMIC BACKGROUND & HERO 3D
@@ -143,16 +131,16 @@ let mouse = { x: 0, y: 0 };
 let targetMouse = { x: 0, y: 0 };
 let mouseDidMove = false;
 document.addEventListener("mousemove", e => {
-   mouseDidMove = true;
    mouse.x = e.clientX;
    mouse.y = e.clientY;
    targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
    targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+   mouseDidMove = true;
 });
 
 // BACKGROUND SCENE
 const canvasBg = document.getElementById("particles");
-const rendererBg = new THREE.WebGLRenderer({ canvas: canvasBg, alpha: true, antialias: true });
+const rendererBg = new THREE.WebGLRenderer({ canvas: canvasBg, alpha: true, antialias: false });
 rendererBg.setSize(window.innerWidth, window.innerHeight);
 rendererBg.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -180,21 +168,21 @@ const posArray = new Float32Array(starsCount * 3);
 const origPosArray = new Float32Array(starsCount * 3);
 const radiusRadius = 250;
 
-for (let i = 0; i < starsCount; i++) {
+for(let i = 0; i < starsCount; i++) {
    const i3 = i * 3;
    const rho = Math.acos(Math.random() * 2 - 1);
    const theta = Math.random() * Math.PI * 2;
-   const r = Math.pow(Math.random(), 1 / 3) * radiusRadius;
+   const r = Math.pow(Math.random(), 1/3) * radiusRadius;
    const x = r * Math.sin(rho) * Math.cos(theta);
    const y = r * Math.sin(rho) * Math.sin(theta);
    const z = r * Math.cos(rho);
-
+   
    posArray[i3] = x;
-   posArray[i3 + 1] = y;
-   posArray[i3 + 2] = z;
+   posArray[i3+1] = y;
+   posArray[i3+2] = z;
    origPosArray[i3] = x;
-   origPosArray[i3 + 1] = y;
-   origPosArray[i3 + 2] = z;
+   origPosArray[i3+1] = y;
+   origPosArray[i3+2] = z;
 }
 starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 const starsMaterial = new THREE.PointsMaterial({
@@ -218,7 +206,7 @@ cameraObj.position.z = 10;
 const rendererObj = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 rendererObj.setSize(window.innerWidth, window.innerHeight);
 rendererObj.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-if (heroContainer) heroContainer.appendChild(rendererObj.domElement);
+if(heroContainer) heroContainer.appendChild(rendererObj.domElement);
 
 const geometry = new THREE.IcosahedronGeometry(isMobile ? 1.6 : 2.5, 1);
 const materialSolid = new THREE.MeshStandardMaterial({
@@ -256,9 +244,7 @@ if (typeof gsap !== 'undefined') {
    });
 }
 
-const raycaster = new THREE.Raycaster();
-let heroHovered = false;
-
+const clock = new THREE.Clock();
 let heroVisible = true;
 let skillsVisible = false;
 let skillsInitialized = false;
@@ -277,31 +263,31 @@ function masterLoop() {
 
    starMesh.rotation.y = elapsedTime * 0.03;
    starMesh.rotation.x = elapsedTime * 0.01;
-
+   
    cameraBg.position.x += (targetMouse.x * 5 - cameraBg.position.x) * 0.05;
    cameraBg.position.y += (targetMouse.y * 5 - cameraBg.position.y) * 0.05;
    cameraBg.lookAt(0, 0, 0);
 
    if (mouseDidMove) {
-      const mw = targetMouse.x * 250;
+      const mw = targetMouse.x * 250; 
       const mh = targetMouse.y * 250;
       const positions = starsGeometry.attributes.position.array;
-      for (let i = 0; i < starsCount; i++) {
-         const i3 = i * 3;
-         const ox = origPosArray[i3];
-         const oy = origPosArray[i3 + 1];
-         const dx = ox - mw;
-         const dy = oy - mh;
-         const distSq = dx * dx + dy * dy;
-         if (distSq < 15000 && distSq > 0.1) {
-            const dist = Math.sqrt(distSq);
-            const force = (120 - dist) * 0.15;
-            positions[i3] = ox + (dx / dist) * force;
-            positions[i3 + 1] = oy + (dy / dist) * force;
-         } else {
-            positions[i3] += (ox - positions[i3]) * 0.1;
-            positions[i3 + 1] += (oy - positions[i3 + 1]) * 0.1;
-         }
+      for(let i=0; i<starsCount; i++) {
+           const i3 = i * 3;
+           const ox = origPosArray[i3];
+           const oy = origPosArray[i3+1];
+           const dx = ox - mw;
+           const dy = oy - mh;
+           const distSq = dx*dx + dy*dy;
+           if(distSq < 15000 && distSq > 0.1) {
+               const dist = Math.sqrt(distSq);
+               const force = (120 - dist) * 0.15;
+               positions[i3] = ox + (dx/dist) * force;
+               positions[i3+1] = oy + (dy/dist) * force;
+           } else {
+               positions[i3] += (ox - positions[i3]) * 0.1;
+               positions[i3+1] += (oy - positions[i3+1]) * 0.1;
+           }
       }
       starsGeometry.attributes.position.needsUpdate = true;
       mouseDidMove = false;
@@ -310,72 +296,20 @@ function masterLoop() {
    rendererBg.render(sceneBg, cameraBg);
 
    if (heroVisible && typeof heroContainer !== "undefined" && heroContainer) {
-      raycaster.setFromCamera(new THREE.Vector2(targetMouse.x, targetMouse.y), cameraObj);
-      const intersects = raycaster.intersectObject(object3D, true);
-      
-      if (intersects.length > 0) {
-         if (!heroHovered) {
-            heroHovered = true;
-            gsap.to(object3D.rotation, {
-               x: object3D.rotation.x + Math.PI,
-               y: object3D.rotation.y + Math.PI,
-               duration: 1.2,
-               ease: "power2.out"
-            });
-            gsap.to(object3D.scale, {
-               x: 1.3, y: 1.3, z: 1.3, duration: 0.3, yoyo: true, repeat: 1
-            });
-         }
-      } else {
-         heroHovered = false;
-         object3D.rotation.y += (targetMouse.x * 4 - object3D.rotation.y) * 0.1;
-         object3D.rotation.x += (targetMouse.y * 4 - object3D.rotation.x) * 0.1;
-         object3D.scale.setScalar(1 + Math.abs(targetMouse.x) * 0.3 + Math.abs(targetMouse.y) * 0.3);
-      }
+      object3D.rotation.y += (targetMouse.x * 4 - object3D.rotation.y) * 0.1;
+      object3D.rotation.x += (targetMouse.y * 4 - object3D.rotation.x) * 0.1;
+      object3D.scale.setScalar(1 + Math.abs(targetMouse.x) * 0.3 + Math.abs(targetMouse.y) * 0.3);
       rendererObj.render(sceneObj, cameraObj);
    }
 
-   // SKILLS RENDER
-   if (skillsVisible && typeof window.skillsRenderer !== 'undefined') {
-      const { ring1, ring2, ring3, core, gyroGroup, rendererSk, sceneSk, cameraSk, skillsRaycaster } = window.skillsRenderer;
-      
+   if (skillsVisible && typeof window.skillsRenderer !== 'undefined' && window.skillsScene && window.skillsCamera) {
+      const { ring1, ring2, ring3, core, gyroGroup, rendererSk, sceneSk, cameraSk } = window.skillsRenderer;
       ring1.rotation.x += 0.01; ring1.rotation.y += 0.02;
       ring2.rotation.x -= 0.02; ring2.rotation.y += 0.01;
       ring3.rotation.z += 0.03; core.rotation.y -= 0.05;
-
-      const rect = skillsContainer.getBoundingClientRect();
-      let isHoveredNow = false;
-      if (mouse.x >= rect.left && mouse.x <= rect.right && mouse.y >= rect.top && mouse.y <= rect.bottom) {
-         const stX = ((mouse.x - rect.left) / rect.width) * 2 - 1;
-         const stY = -((mouse.y - rect.top) / rect.height) * 2 + 1;
-         
-         skillsRaycaster.setFromCamera(new THREE.Vector2(stX, stY), cameraSk);
-         const sIntersects = skillsRaycaster.intersectObject(gyroGroup, true);
-         
-         if (sIntersects.length > 0) {
-            isHoveredNow = true;
-            if (!window.skillsHoveredFlag) {
-               window.skillsHoveredFlag = true;
-               gsap.to(gyroGroup.rotation, {
-                  y: gyroGroup.rotation.y + Math.PI,
-                  x: gyroGroup.rotation.x + Math.PI,
-                  duration: 1.2,
-                  ease: "power2.out"
-               });
-               const baseScale = isMobile ? 0.6 : 1;
-               gsap.to(gyroGroup.scale, {
-                  x: baseScale * 1.3, y: baseScale * 1.3, z: baseScale * 1.3, duration: 0.3, yoyo: true, repeat: 1
-               });
-            }
-         }
-      }
       
-      if(!isHoveredNow) {
-         window.skillsHoveredFlag = false;
-         gyroGroup.position.x += (targetMouse.x * 1.5 - gyroGroup.position.x) * 0.1;
-         gyroGroup.position.y += (targetMouse.y * 1.5 - gyroGroup.position.y) * 0.1;
-      }
-      
+      gyroGroup.position.x += (targetMouse.x * 1.5 - gyroGroup.position.x) * 0.1;
+      gyroGroup.position.y += (targetMouse.y * 1.5 - gyroGroup.position.y) * 0.1;
       rendererSk.render(sceneSk, cameraSk);
    }
 }
@@ -415,45 +349,43 @@ profile.addEventListener("mouseleave", () => profile.style.transform = "rotateX(
 ===================== */
 const skillsContainer = document.getElementById("skills-3d-container");
 function initSkillsScene() {
-   if (!skillsContainer) return;
+   if(!skillsContainer) return;
    const sceneSk = new THREE.Scene();
    const cameraSk = new THREE.PerspectiveCamera(45, skillsContainer.clientWidth / skillsContainer.clientHeight, 0.1, 100);
    cameraSk.position.z = 10;
-
+   
    const rendererSk = new THREE.WebGLRenderer({ alpha: true, antialias: true });
    rendererSk.setSize(skillsContainer.clientWidth, skillsContainer.clientHeight);
    rendererSk.setPixelRatio(Math.min(window.devicePixelRatio, 2));
    skillsContainer.appendChild(rendererSk.domElement);
-
-   // Advanced Gyroscope
+   
    const gyroGroup = new THREE.Group();
    const mat = new THREE.MeshStandardMaterial({ color: 0xec4899, wireframe: true, transparent: true, opacity: 0.8 });
-
+   
    const ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.6, 0.1, 16, 100), mat);
    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(1.2, 0.1, 16, 100), mat);
    const ring3 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.1, 16, 100), mat);
-   const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.4, 0), new THREE.MeshStandardMaterial({ color: 0x6366f1, metalness: 0.9 }));
-
+   const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.4, 0), new THREE.MeshStandardMaterial({color: 0x6366f1, metalness: 0.9}));
+   
    ring2.rotation.x = Math.PI / 2;
    ring3.rotation.y = Math.PI / 2;
-
+   
    gyroGroup.add(ring1);
    gyroGroup.add(ring2);
    gyroGroup.add(ring3);
    gyroGroup.add(core);
 
-   if (isMobile) gyroGroup.scale.set(0.6, 0.6, 0.6);
+   if(isMobile) gyroGroup.scale.set(0.6, 0.6, 0.6);
 
    sceneSk.add(gyroGroup);
-
+   
    const light2 = new THREE.PointLight(0xa855f7, 2, 50);
    light2.position.set(5, 5, 5);
    sceneSk.add(light2);
 
-   const skillsRaycaster = new THREE.Raycaster();
-   window.skillsHoveredFlag = false;
-
-   window.skillsRenderer = { ring1, ring2, ring3, core, gyroGroup, rendererSk, sceneSk, cameraSk, skillsRaycaster };
+   window.skillsRenderer = { ring1, ring2, ring3, core, gyroGroup, rendererSk, sceneSk, cameraSk };
+   window.skillsScene = sceneSk;
+   window.skillsCamera = cameraSk;
 
    window.addEventListener("resize", () => {
       cameraSk.aspect = skillsContainer.clientWidth / skillsContainer.clientHeight;
@@ -469,7 +401,6 @@ const lazySkillsObserver = new IntersectionObserver((entries) => {
     lazySkillsObserver.disconnect();
   }
 }, { threshold: 0.1 });
-
 if(document.getElementById('skills')) lazySkillsObserver.observe(document.getElementById('skills'));
 
 /* =====================
@@ -478,10 +409,9 @@ if(document.getElementById('skills')) lazySkillsObserver.observe(document.getEle
 const cursorDot = document.querySelector(".cursor-dot");
 const cursorOutline = document.querySelector(".cursor-outline");
 const cursorGlow = document.querySelector(".cursor-glow");
-
 const spotlight = document.getElementById("spotlight");
 
-if (cursorDot && cursorOutline && !isMobile) {
+if(cursorDot && cursorOutline && !isMobile) {
    window.addEventListener("mousemove", (e) => {
       cursorDot.style.left = e.clientX + "px";
       cursorDot.style.top = e.clientY + "px";
@@ -516,7 +446,7 @@ if (cursorDot && cursorOutline && !isMobile) {
 
 // Universal 3D Tilt
 function apply3DTilt(selector) {
-   if (isMobile) return;
+   if(isMobile) return;
    document.querySelectorAll(selector).forEach(card => {
       card.addEventListener("mousemove", e => {
          const r = card.getBoundingClientRect();
@@ -545,6 +475,7 @@ window.addEventListener("scroll", () => {
    scrollTicking = true;
    requestAnimationFrame(() => {
       if(btn) btn.style.display = window.scrollY > 300 ? "flex" : "none";
+      
       let current = "";
       sections.forEach(section => {
          const sectionTop = section.offsetTop - 150;
@@ -661,19 +592,18 @@ ${repo.language || ""}
 </div>`;
             card.onclick = () => window.open(repo.html_url, "_blank");
             projectsGrid.appendChild(card);
-
+            
             gsap.fromTo(card,
                { opacity: 0, y: 50, scale: 0.95, rotationX: 10 },
-               {
-                  opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 0.8, ease: "power3.out",
-                  scrollTrigger: { trigger: card, start: "top 85%", once: true }
+               { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 0.8, ease: "power3.out",
+                 scrollTrigger: { trigger: card, start: "top 85%", once: true } 
                }
             );
             card.classList.add("show");
          });
 
-      // Apply universal tilt to newly injected project cards
-      setTimeout(() => apply3DTilt(".projectCard"), 100);
+         // Apply universal tilt to newly injected project cards
+         setTimeout(() => apply3DTilt(".projectCard"), 100);
    } catch (err) {
       projectsGrid.innerHTML = "<p>Failed to load projects</p>";
    }
