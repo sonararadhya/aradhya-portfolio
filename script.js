@@ -403,15 +403,6 @@ const lazySkillsObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 if(document.getElementById('skills')) lazySkillsObserver.observe(document.getElementById('skills'));
 
-   animateSk();
-
-   window.addEventListener("resize", () => {
-      cameraSk.aspect = skillsContainer.clientWidth / skillsContainer.clientHeight;
-      cameraSk.updateProjectionMatrix();
-      rendererSk.setSize(skillsContainer.clientWidth, skillsContainer.clientHeight);
-   });
-}
-
 /* =====================
    CUSTOM CURSOR & TILT
 ===================== */
