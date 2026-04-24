@@ -304,6 +304,11 @@ body {
    color: black;
 }
 
+.light #certificates {
+   background: rgba(16, 185, 129, 0.5);
+   color: black;
+}
+
 .light #contact {
    background: rgba(15, 118, 110, 0.5);
    color: black;

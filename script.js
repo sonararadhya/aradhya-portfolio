@@ -758,6 +758,49 @@ async function renderCertificates(category) {
    const files = certData[category] || [];
    const basePath = `CERTIFICATES/${category}/`;
 
+   // Create an IntersectionObserver for lazy rendering PDFs
+   const pdfObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+         if (entry.isIntersecting) {
+            const canvas = entry.target;
+            const file = canvas.getAttribute("data-file");
+            const basePath = canvas.getAttribute("data-basepath");
+            
+            // Stop observing once we start rendering
+            observer.unobserve(canvas);
+            
+            // Render the PDF
+            (async () => {
+               try {
+                  const loadingTask = pdfjsLib.getDocument(basePath + file);
+                  const pdf = await loadingTask.promise;
+                  const page = await pdf.getPage(1);
+                  
+                  // Reduced scale from 1.5 to 0.8 for massive memory/CPU savings
+                  const viewport = page.getViewport({ scale: 0.8 });
+                  const context = canvas.getContext("2d");
+                  canvas.height = viewport.height;
+                  canvas.width = viewport.width;
+
+                  const renderContext = {
+                     canvasContext: context,
+                     viewport: viewport
+                  };
+                  await page.render(renderContext).promise;
+                  
+                  // CRITICAL: Cleanup memory after rendering!
+                  page.cleanup();
+                  pdf.destroy();
+               } catch (err) {
+                  console.error("Error rendering PDF:", file, err);
+                  const wrap = canvas.parentElement;
+                  if(wrap) wrap.innerHTML = "<p style='color: #888; font-size: 12px; text-align: center;'>Preview not available</p>";
+               }
+            })();
+         }
+      });
+   }, { rootMargin: "200px 0px", threshold: 0.01 });
+
    for (const file of files) {
       try {
          // Create DOM elements
@@ -773,6 +816,12 @@ async function renderCertificates(category) {
          canvasWrap.className = "certCanvasWrap";
          
          const canvas = document.createElement("canvas");
+         // SEO / Accessibility
+         canvas.setAttribute("aria-label", `Aradhya Sonar Certificate: ${file.replace(".pdf", "")}`);
+         canvas.setAttribute("title", `Aradhya Sonar Certificate: ${file.replace(".pdf", "")}`);
+         canvas.setAttribute("data-file", file);
+         canvas.setAttribute("data-basepath", basePath);
+         
          canvasWrap.appendChild(canvas);
 
          const title = document.createElement("div");
@@ -785,6 +834,7 @@ async function renderCertificates(category) {
          viewBtn.href = basePath + file;
          viewBtn.target = "_blank";
          viewBtn.textContent = "View Full PDF";
+         viewBtn.setAttribute("aria-label", `View full PDF of ${file.replace(".pdf", "")}`);
          overlay.appendChild(viewBtn);
 
          card.appendChild(canvasWrap);
@@ -793,28 +843,8 @@ async function renderCertificates(category) {
          
          certGrid.appendChild(card);
 
-         // Fetch and render PDF asynchronously to not block UI completely
-         setTimeout(async () => {
-            try {
-               const loadingTask = pdfjsLib.getDocument(basePath + file);
-               const pdf = await loadingTask.promise;
-               const page = await pdf.getPage(1);
-               
-               const viewport = page.getViewport({ scale: 1.5 });
-               const context = canvas.getContext("2d");
-               canvas.height = viewport.height;
-               canvas.width = viewport.width;
-
-               const renderContext = {
-                  canvasContext: context,
-                  viewport: viewport
-               };
-               await page.render(renderContext).promise;
-            } catch (err) {
-               console.error("Error rendering PDF:", file, err);
-               canvasWrap.innerHTML = "<p style='color: #888; font-size: 12px; text-align: center;'>Preview not available</p>";
-            }
-         }, 50);
+         // Observe canvas for lazy loading
+         pdfObserver.observe(canvas);
 
       } catch (err) {
          console.error("Error setting up card:", err);
