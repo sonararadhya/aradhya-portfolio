@@ -1288,26 +1288,65 @@ body {
       display: block !important;
    }
 
+   .menuOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.4s ease;
+   }
+
+   .menuOverlay.active {
+      opacity: 1;
+      visibility: visible;
+   }
+
    .navLinks {
       position: fixed;
       top: 0;
       right: -100%;
-      width: 280px;
+      width: 300px;
+      max-width: 80vw;
       height: 100vh;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(25px);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
       flex-direction: column;
       justify-content: flex-start;
-      align-items: center;
-      gap: 25px;
+      align-items: flex-start;
+      gap: 20px;
       padding: 30px;
       transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 999;
       box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
    }
 
+   .navLinks li {
+      width: 100%;
+   }
+
+   .navLinks a {
+      font-size: 18px;
+      font-weight: 600;
+      display: block;
+      width: 100%;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+   }
+
+   .light .navLinks a {
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+   }
+
    .light .navLinks {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.85);
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
    }
 
    .navLinks.active {
@@ -1454,13 +1493,13 @@ body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn {
 .cursor-dot {
    position: fixed;
    top: 0; left: 0;
-   width: 6px; height: 6px;
+   width: 12px; height: 12px;
    background: var(--accent);
-   border-radius: 50%;
+   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
    pointer-events: none;
    z-index: 9999;
    transform: translate(-50%, -50%);
-   transition: width 0.3s, height 0.3s;
+   transition: width 0.3s, height 0.3s, opacity 0.3s;
 }
 
 .cursor-outline {
@@ -1472,7 +1511,21 @@ body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn {
    pointer-events: none;
    z-index: 9998;
    transform: translate(-50%, -50%);
-   transition: left 0.5s ease, top 0.5s ease, width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+   transition: left 0.5s ease, top 0.5s ease, width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s, border-radius 0.3s, transform 0.3s, backdrop-filter 0.3s;
+}
+
+.cursor-outline.hover-rhombus {
+   width: 60px;
+   height: 60px;
+   border-radius: 12px;
+   background: rgba(255, 255, 255, 0.1);
+   backdrop-filter: blur(8px);
+   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.light .cursor-outline.hover-rhombus {
+   background: rgba(0, 0, 0, 0.05);
+   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .profileWrapper {

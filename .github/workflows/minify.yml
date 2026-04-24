@@ -1,0 +1,37 @@
+name: Auto Minify Assets
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'styles.css'
+      - 'script.js'
+
+permissions:
+  contents: write
+
+jobs:
+  minify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js (For Minification Tools)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Minification Script
+        run: |
+          chmod +x minify.sh
+          ./minify.sh
+
+      - name: Commit Minified Files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-minify: generate .min.css and .min.js [skip ci]"
+          file_pattern: 'styles.min.css script.min.js'

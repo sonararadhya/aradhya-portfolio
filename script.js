@@ -130,9 +130,12 @@ const navLinksContainer = document.querySelector(".navLinks");
 
 if(menuBtn && navLinksContainer) {
    const closeMenuBtn = document.getElementById("closeMenuBtn");
+   const menuOverlay = document.getElementById("menuOverlay");
    
    const toggleMenu = () => {
       navLinksContainer.classList.toggle("active");
+      if(menuOverlay) menuOverlay.classList.toggle("active");
+      
       const icon = menuBtn.querySelector("i");
       if(navLinksContainer.classList.contains("active")) {
          icon.classList.remove("ri-menu-3-line");
@@ -145,11 +148,13 @@ if(menuBtn && navLinksContainer) {
 
    menuBtn.onclick = toggleMenu;
    if(closeMenuBtn) closeMenuBtn.onclick = toggleMenu;
+   if(menuOverlay) menuOverlay.onclick = toggleMenu;
 
    // Close menu when clicking a link
    navLinksContainer.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
          navLinksContainer.classList.remove("active");
+         if(menuOverlay) menuOverlay.classList.remove("active");
          const icon = menuBtn.querySelector("i");
          icon.classList.remove("ri-close-line");
          icon.classList.add("ri-menu-3-line");
@@ -520,17 +525,20 @@ if(cursorDot && cursorOutline) {
    document.body.addEventListener("mouseover", e => {
       const el = e.target.closest("a, button, .card, .flipScene, .projectCard, .workCard");
       if (el) {
-         cursorOutline.style.transform = "translate(-50%, -50%) scale(1.5)";
-         cursorOutline.style.backgroundColor = "rgba(168, 85, 247, 0.1)";
-         cursorDot.style.transform = "translate(-50%, -50%) scale(0.5)";
+         cursorOutline.classList.add("hover-rhombus");
+         cursorOutline.style.transform = "translate(-50%, -50%) rotate(45deg) scale(1)";
+         cursorOutline.style.backgroundColor = ""; // handled by css
+         cursorDot.style.opacity = "0";
       }
    });
 
    document.body.addEventListener("mouseout", e => {
       const el = e.target.closest("a, button, .card, .flipScene, .projectCard, .workCard");
       if (el) {
-         cursorOutline.style.transform = "translate(-50%, -50%) scale(1)";
+         cursorOutline.classList.remove("hover-rhombus");
+         cursorOutline.style.transform = "translate(-50%, -50%) rotate(0deg) scale(1)";
          cursorOutline.style.backgroundColor = "transparent";
+         cursorDot.style.opacity = "1";
          cursorDot.style.transform = "translate(-50%, -50%) scale(1)";
       }
    });
