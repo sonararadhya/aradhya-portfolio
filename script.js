@@ -129,7 +129,9 @@ const menuBtn = document.getElementById("menuBtn");
 const navLinksContainer = document.querySelector(".navLinks");
 
 if(menuBtn && navLinksContainer) {
-   menuBtn.onclick = () => {
+   const closeMenuBtn = document.getElementById("closeMenuBtn");
+   
+   const toggleMenu = () => {
       navLinksContainer.classList.toggle("active");
       const icon = menuBtn.querySelector("i");
       if(navLinksContainer.classList.contains("active")) {
@@ -140,6 +142,9 @@ if(menuBtn && navLinksContainer) {
          icon.classList.add("ri-menu-3-line");
       }
    };
+
+   menuBtn.onclick = toggleMenu;
+   if(closeMenuBtn) closeMenuBtn.onclick = toggleMenu;
 
    // Close menu when clicking a link
    navLinksContainer.querySelectorAll("a").forEach(link => {
