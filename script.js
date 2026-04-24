@@ -495,19 +495,22 @@ const cursorOutline = document.querySelector(".cursor-outline");
 const cursorGlow = document.querySelector(".cursor-glow");
 const spotlight = document.getElementById("spotlight");
 
-if(cursorDot && cursorOutline && !isMobile) {
-   window.addEventListener("mousemove", (e) => {
-      cursorDot.style.left = e.clientX + "px";
-      cursorDot.style.top = e.clientY + "px";
+if(cursorDot && cursorOutline) {
+   const moveCursor = (x, y) => {
+      cursorDot.style.left = x + "px";
+      cursorDot.style.top = y + "px";
       
       if(spotlight) {
-         spotlight.style.left = e.clientX + "px";
-         spotlight.style.top = e.clientY + "px";
+         spotlight.style.left = x + "px";
+         spotlight.style.top = y + "px";
       }
 
-      document.documentElement.style.setProperty('--cx', e.clientX + 'px');
-      document.documentElement.style.setProperty('--cy', e.clientY + 'px');
-   });
+      document.documentElement.style.setProperty('--cx', x + 'px');
+      document.documentElement.style.setProperty('--cy', y + 'px');
+   };
+
+   window.addEventListener("mousemove", (e) => moveCursor(e.clientX, e.clientY));
+   window.addEventListener("touchmove", (e) => moveCursor(e.touches[0].clientX, e.touches[0].clientY));
 
    document.body.addEventListener("mouseover", e => {
       const el = e.target.closest("a, button, .card, .flipScene, .projectCard, .workCard");
@@ -562,11 +565,19 @@ window.addEventListener("scroll", () => {
       
       let current = "";
       sections.forEach(section => {
-         const sectionTop = section.offsetTop - 150;
+         const sectionTop = section.offsetTop - 250;
          if (scrollY >= sectionTop) {
             current = section.getAttribute("id");
          }
       });
+      
+      // If we are at the very bottom of the page, force highlight the last section
+      if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 50) {
+          if (sections.length > 0) {
+             current = sections[sections.length - 1].getAttribute("id");
+          }
+      }
+      
       navLinks.forEach(link => {
          link.classList.remove("active");
          if (link.getAttribute("href") === "#" + current) {

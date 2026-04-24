@@ -76,7 +76,4 @@ I am actively seeking software engineering opportunities! Feel free to reach out
 * **GitHub:** [@sonararadhya](https://github.com/sonararadhya)
 * **Email:** Request via portfolio contact form.
 
----
-<div align="center">
-  <i>Built with ❤️ by Aradhya Sonar</i>
-</div>
+
