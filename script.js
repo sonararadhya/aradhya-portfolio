@@ -122,6 +122,36 @@ toggle.onclick = () => {
       : '<i class="ri-sun-line"></i>';
 };
 
+/* =====================
+   MOBILE MENU TOGGLE
+===================== */
+const menuBtn = document.getElementById("menuBtn");
+const navLinksContainer = document.querySelector(".navLinks");
+
+if(menuBtn && navLinksContainer) {
+   menuBtn.onclick = () => {
+      navLinksContainer.classList.toggle("active");
+      const icon = menuBtn.querySelector("i");
+      if(navLinksContainer.classList.contains("active")) {
+         icon.classList.remove("ri-menu-3-line");
+         icon.classList.add("ri-close-line");
+      } else {
+         icon.classList.remove("ri-close-line");
+         icon.classList.add("ri-menu-3-line");
+      }
+   };
+
+   // Close menu when clicking a link
+   navLinksContainer.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+         navLinksContainer.classList.remove("active");
+         const icon = menuBtn.querySelector("i");
+         icon.classList.remove("ri-close-line");
+         icon.classList.add("ri-menu-3-line");
+      });
+   });
+}
+
 
 
 /* =====================
