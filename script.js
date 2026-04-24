@@ -721,20 +721,19 @@ document.addEventListener("DOMContentLoaded", () => {
 ===================== */
 const certData = {
    "CORE TECHNICAL CERTIFICATIONS": [
-      "Android using Kotlin.pdf", "Bootstrap.pdf", "CPP ADVANCE_.pdf", 
-      "CPPTEST.pdf", "CYBER WORKSHOP.pdf", "NodeJS Bootcamp.pdf", 
-      "PHP MYSQL.pdf", "c Language.pdf", "c and cpp.pdf", 
-      "linux.pdf", "linux1.pdf"
+      "Android using Kotlin.pdf", "Bootstrap.pdf", "C & CPP.pdf", 
+      "C LANG.pdf", "CPP ADVANCE.pdf", "CPP_TEST.pdf", 
+      "CYBER SANSKAR WORKSHOP.pdf", "LINUX Programme.pdf", "LINUX TEST.pdf", 
+      "NodeJS Bootcamp.pdf", "PHP MYSQL.pdf", "R Programming.pdf"
    ],
    "SUPPORTING TECHNICAL CERTIFICATIONS": [
       "Android.pdf", "CSS, JAVASCRIPT AND PYTHON.pdf", "Cyber Crime Analyst.pdf", 
       "Cyber Forensics Investigator.pdf", "FULL STACK.pdf", "Hackerrank javascript.pdf", 
-      "JAVA(1).pdf", "JAVA.pdf", "Javascript(1).pdf", "Javascript.pdf", 
-      "PHP.pdf", "Python and Flask.pdf", "ReactJS.pdf"
+      "JAVA.pdf", "Javascript.pdf", "PHP.pdf", "Python and Flask.pdf", "ReactJS.pdf"
    ],
    "EXTRACURRICULAR AND NON-TECHNICAL CERTIFICATIONS": [
-      "ARTICLE 3RD.pdf", "CQUIZ.pdf", "PHOTOGRAPHY 1ST.pdf", 
-      "POSTER PRESENTATION_.pdf", "Photography_.pdf", "Poem.pdf", 
+      "ARTICLE WRITING RANK 3.pdf", "CQUIZ.pdf", "PHOTOGRAPHY RANK 1.pdf", 
+      "POEM WRITING.pdf", "POSTER PRESENTATION.pdf", "Photography.pdf", 
       "QUIZ.pdf", "QuizSci.pdf", "Speech.pdf"
    ]
 };
