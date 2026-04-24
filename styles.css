@@ -1014,6 +1014,157 @@ body {
 }
 
 /* =====================
+   CERTIFICATES
+===================== */
+.certTabs {
+   display: flex;
+   justify-content: center;
+   gap: 15px;
+   margin-bottom: 40px;
+   flex-wrap: wrap;
+}
+
+.certTab {
+   padding: 10px 20px;
+   border: 1px solid rgba(168, 85, 247, .4);
+   background: var(--card);
+   color: var(--text);
+   border-radius: 30px;
+   cursor: pointer;
+   font-family: 'Poppins', sans-serif;
+   font-size: 14px;
+   font-weight: 500;
+   transition: .3s;
+   backdrop-filter: blur(14px);
+}
+
+.certTab:hover {
+   border-color: var(--accent);
+   box-shadow: 0 0 15px var(--glow);
+   transform: translateY(-2px);
+}
+
+.certTab.active {
+   background: var(--accent);
+   color: #fff;
+   border-color: var(--accent);
+   box-shadow: 0 0 20px var(--glow);
+}
+
+.light .certTab {
+   border-color: rgba(30, 58, 138, .3);
+}
+
+.light .certTab.active {
+   background: #facc15;
+   color: #000;
+   border-color: #facc15;
+   box-shadow: 0 0 20px rgba(250, 204, 21, .8);
+}
+
+.certGrid {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 25px;
+   justify-content: center;
+}
+
+.certCard {
+   background: var(--card);
+   padding: 15px;
+   border-radius: 18px;
+   border: 1px solid var(--glass-border);
+   backdrop-filter: blur(14px);
+   transition: border-color .3s, box-shadow .3s, transform .3s;
+   width: 320px;
+   position: relative;
+   overflow: hidden;
+   cursor: pointer;
+   transform-style: preserve-3d;
+}
+
+.certCard:hover {
+   border-color: var(--accent);
+   box-shadow: 0 0 30px var(--glow);
+   transform: translateY(-8px);
+}
+
+.light .certCard:hover {
+   box-shadow: 0 0 35px rgba(250, 204, 21, .95);
+   border-color: #facc15;
+}
+
+.certCanvasWrap {
+   width: 100%;
+   height: 220px;
+   border-radius: 12px;
+   overflow: hidden;
+   background: #fff; /* PDFs usually have white bg */
+   border: 1px solid rgba(0,0,0,0.1);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   transform: translateZ(30px);
+}
+
+.certCanvasWrap canvas {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
+
+.certTitle {
+   margin-top: 15px;
+   font-size: 15px;
+   font-weight: 600;
+   text-align: center;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   transform: translateZ(30px);
+}
+
+.certViewOverlay {
+   position: absolute;
+   top: 0; left: 0; width: 100%; height: 100%;
+   background: rgba(0, 0, 0, 0.6);
+   backdrop-filter: blur(4px);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   opacity: 0;
+   transition: opacity .3s;
+   border-radius: 18px;
+   transform: translateZ(50px);
+}
+
+.certCard:hover .certViewOverlay {
+   opacity: 1;
+}
+
+.certViewOverlay a {
+   padding: 10px 20px;
+   background: var(--accent);
+   color: #fff;
+   text-decoration: none;
+   border-radius: 30px;
+   font-weight: 600;
+   font-size: 14px;
+   transform: translateY(20px);
+   transition: transform .3s, box-shadow .3s;
+}
+
+.light .certViewOverlay a {
+   background: #facc15;
+   color: #000;
+}
+
+.certCard:hover .certViewOverlay a {
+   transform: translateY(0);
+   box-shadow: 0 0 15px var(--glow);
+}
+
+/* =====================
    FOOTER
 ===================== */
 .footer {

@@ -108,6 +108,7 @@
       <li><a href="#education">Education</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#work">Work Experience</a></li>
+      <li><a href="#certificates">Certificates</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -455,6 +456,22 @@
     </div>
   </section>
 
+  <!-- CERTIFICATES -->
+  <section id="certificates" class="section">
+    <h2>My Certificates</h2>
+    <div class="certTabs">
+      <button class="certTab active" data-category="CORE TECHNICAL CERTIFICATIONS">Core Technical</button>
+      <button class="certTab" data-category="SUPPORTING TECHNICAL CERTIFICATIONS">Supporting Technical</button>
+      <button class="certTab" data-category="EXTRACURRICULAR AND NON-TECHNICAL CERTIFICATIONS">Extracurricular</button>
+    </div>
+    
+    <div id="certLoader" class="profileLoader" style="display: none; margin: 40px auto; position: static;"></div>
+    
+    <div id="certificatesGrid" class="grid certGrid">
+      <!-- Certificates will be dynamically loaded here via PDF.js -->
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact" class="section">
     <div class="contactContent">
@@ -500,6 +517,7 @@
           <li><a href="#education">Education</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#work">Work Experience</a></li>
+          <li><a href="#certificates">Certificates</a></li>
         </ul>
       </div>
 
@@ -526,6 +544,10 @@
   <!-- jQuery & jQuery Ripples for Liquid Contact Physics -->
   <script defer src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
+  <!-- PDF.js -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <!-- Vanilla Tilt -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
   <!-- Main Script -->
   <script defer src="script.js"></script>
 </body>

@@ -715,3 +715,153 @@ document.addEventListener("DOMContentLoaded", () => {
       });
    });
 });
+
+/* =====================
+   CERTIFICATES RENDERING (PDF.JS + VANILLA TILT)
+===================== */
+const certData = {
+   "CORE TECHNICAL CERTIFICATIONS": [
+      "Android using Kotlin.pdf", "Bootstrap.pdf", "CPP ADVANCE_.pdf", 
+      "CPPTEST.pdf", "CYBER WORKSHOP.pdf", "NodeJS Bootcamp.pdf", 
+      "PHP MYSQL.pdf", "c Language.pdf", "c and cpp.pdf", 
+      "linux.pdf", "linux1.pdf"
+   ],
+   "SUPPORTING TECHNICAL CERTIFICATIONS": [
+      "Android.pdf", "CSS, JAVASCRIPT AND PYTHON.pdf", "Cyber Crime Analyst.pdf", 
+      "Cyber Forensics Investigator.pdf", "FULL STACK.pdf", "Hackerrank javascript.pdf", 
+      "JAVA(1).pdf", "JAVA.pdf", "Javascript(1).pdf", "Javascript.pdf", 
+      "PHP.pdf", "Python and Flask.pdf", "ReactJS.pdf"
+   ],
+   "EXTRACURRICULAR AND NON-TECHNICAL CERTIFICATIONS": [
+      "ARTICLE 3RD.pdf", "CQUIZ.pdf", "PHOTOGRAPHY 1ST.pdf", 
+      "POSTER PRESENTATION_.pdf", "Photography_.pdf", "Poem.pdf", 
+      "QUIZ.pdf", "QuizSci.pdf", "Speech.pdf"
+   ]
+};
+
+const certGrid = document.getElementById("certificatesGrid");
+const certLoader = document.getElementById("certLoader");
+const certTabs = document.querySelectorAll(".certTab");
+
+// Setup PDF.js worker
+if (typeof pdfjsLib !== 'undefined') {
+   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+}
+
+async function renderCertificates(category) {
+   if (!certGrid || typeof pdfjsLib === 'undefined') return;
+   
+   // Clear grid and show loader
+   certGrid.innerHTML = '';
+   certLoader.style.display = 'block';
+   
+   const files = certData[category] || [];
+   const basePath = `CERTIFICATES/${category}/`;
+
+   for (const file of files) {
+      try {
+         // Create DOM elements
+         const card = document.createElement("div");
+         card.className = "certCard";
+         card.setAttribute("data-tilt", "");
+         card.setAttribute("data-tilt-max", "10");
+         card.setAttribute("data-tilt-speed", "400");
+         card.setAttribute("data-tilt-glare", "true");
+         card.setAttribute("data-tilt-max-glare", "0.3");
+
+         const canvasWrap = document.createElement("div");
+         canvasWrap.className = "certCanvasWrap";
+         
+         const canvas = document.createElement("canvas");
+         canvasWrap.appendChild(canvas);
+
+         const title = document.createElement("div");
+         title.className = "certTitle";
+         title.textContent = file.replace(".pdf", "");
+
+         const overlay = document.createElement("div");
+         overlay.className = "certViewOverlay";
+         const viewBtn = document.createElement("a");
+         viewBtn.href = basePath + file;
+         viewBtn.target = "_blank";
+         viewBtn.textContent = "View Full PDF";
+         overlay.appendChild(viewBtn);
+
+         card.appendChild(canvasWrap);
+         card.appendChild(title);
+         card.appendChild(overlay);
+         
+         certGrid.appendChild(card);
+
+         // Fetch and render PDF asynchronously to not block UI completely
+         setTimeout(async () => {
+            try {
+               const loadingTask = pdfjsLib.getDocument(basePath + file);
+               const pdf = await loadingTask.promise;
+               const page = await pdf.getPage(1);
+               
+               const viewport = page.getViewport({ scale: 1.5 });
+               const context = canvas.getContext("2d");
+               canvas.height = viewport.height;
+               canvas.width = viewport.width;
+
+               const renderContext = {
+                  canvasContext: context,
+                  viewport: viewport
+               };
+               await page.render(renderContext).promise;
+            } catch (err) {
+               console.error("Error rendering PDF:", file, err);
+               canvasWrap.innerHTML = "<p style='color: #888; font-size: 12px; text-align: center;'>Preview not available</p>";
+            }
+         }, 50);
+
+      } catch (err) {
+         console.error("Error setting up card:", err);
+      }
+   }
+   
+   // Hide loader once setup is done
+   certLoader.style.display = 'none';
+
+   // Initialize VanillaTilt if available
+   if (typeof VanillaTilt !== 'undefined') {
+      VanillaTilt.init(document.querySelectorAll(".certCard"));
+   }
+   
+   // Animate cards entry using GSAP
+   if (typeof gsap !== 'undefined') {
+      gsap.fromTo(".certCard", 
+         { opacity: 0, y: 40, scale: 0.95 },
+         { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+      );
+   }
+}
+
+// Tab Switching Logic
+certTabs.forEach(tab => {
+   tab.addEventListener("click", () => {
+      // Remove active class from all tabs
+      certTabs.forEach(t => t.classList.remove("active"));
+      // Add active to clicked
+      tab.classList.add("active");
+      
+      const category = tab.getAttribute("data-category");
+      renderCertificates(category);
+   });
+});
+
+// Load default category using IntersectionObserver
+let certsInitialized = false;
+const certSectionObs = new IntersectionObserver((entries) => {
+   if (entries[0].isIntersecting && !certsInitialized) {
+      certsInitialized = true;
+      renderCertificates("CORE TECHNICAL CERTIFICATIONS");
+      certSectionObs.disconnect();
+   }
+}, { threshold: 0.1 });
+
+const certSection = document.getElementById("certificates");
+if (certSection) {
+   certSectionObs.observe(certSection);
+}
