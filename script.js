@@ -542,6 +542,14 @@ if(cursorDot && cursorOutline) {
          cursorDot.style.transform = "translate(-50%, -50%) scale(1)";
       }
    });
+
+   window.addEventListener("mousedown", () => {
+      if(cursorOutline) cursorOutline.classList.add("click-neon");
+   });
+
+   window.addEventListener("mouseup", () => {
+      if(cursorOutline) cursorOutline.classList.remove("click-neon");
+   });
 }
 
 // Universal 3D Tilt
