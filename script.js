@@ -546,8 +546,14 @@ if(cursorDot && cursorOutline) {
    window.addEventListener("mousedown", () => {
       if(cursorOutline) cursorOutline.classList.add("click-neon");
    });
+   window.addEventListener("touchstart", () => {
+      if(cursorOutline) cursorOutline.classList.add("click-neon");
+   });
 
    window.addEventListener("mouseup", () => {
+      if(cursorOutline) cursorOutline.classList.remove("click-neon");
+   });
+   window.addEventListener("touchend", () => {
       if(cursorOutline) cursorOutline.classList.remove("click-neon");
    });
 }

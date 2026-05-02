@@ -13,18 +13,22 @@ section {
    --text: #e2e8f0;
    --accent: #b874fe;
    --glow: rgba(184, 116, 254, 0.8);
-   --cursor-glow: rgba(184, 116, 254, 0.4);
-   --glass-bg: rgba(10, 10, 20, 0.4);
+   --cursor-glow: rgba(0, 243, 255, 0.4);
+   --glass-bg: rgba(12, 12, 24, 0.45);
    --glass-border: rgba(255, 255, 255, 0.08);
+   --glass-edge: rgba(255, 255, 255, 0.05);
 }
 
 .light {
    --bg: #ffffff;
-   --card: #f4f7fb;
+   --card: rgba(255, 255, 255, 0.6);
    --text: #0b1f3a;
    --accent: #1e3a8a;
    --glow: rgba(30, 58, 138, .4);
-   --cursor-glow: rgba(250, 204, 21, .35);
+   --cursor-glow: rgba(37, 99, 235, 0.35);
+   --glass-bg: rgba(255, 255, 255, 0.4);
+   --glass-border: rgba(15, 23, 42, 0.08);
+   --glass-edge: rgba(255, 255, 255, 0.5);
 }
 
 body {
@@ -147,7 +151,7 @@ body {
    padding: 18px 70px;
    box-sizing: border-box;
    background: rgba(15, 23, 42, .8);
-   backdrop-filter: blur(14px);
+   backdrop-filter: blur(25px) saturate(180%);
    z-index: 1000;
 }
 
@@ -714,7 +718,8 @@ body {
    padding: 25px;
    border-radius: 18px;
    border: 1px solid var(--glass-border);
-   backdrop-filter: blur(14px);
+   backdrop-filter: blur(25px) saturate(180%);
+   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 1px var(--glass-edge);
    transition: .4s;
    opacity: 0;
    transform: translateY(40px);
@@ -773,7 +778,7 @@ body {
    padding: 25px;
    border-radius: 18px;
    border: 1px solid var(--glass-border);
-   backdrop-filter: blur(14px);
+   backdrop-filter: blur(25px) saturate(180%);
    transition: .4s;
    opacity: 0;
    transform: translateY(40px);
@@ -982,13 +987,15 @@ body {
 
 .workCard {
    background: var(--card);
-   backdrop-filter: blur(14px);
+   backdrop-filter: blur(25px) saturate(180%);
    width: calc(100% - 40px);
    max-width: 420px;
    padding: 30px;
    border-radius: 18px;
    text-align: left;
    border: 1px solid var(--glass-border);
+   backdrop-filter: blur(25px) saturate(180%);
+   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 1px var(--glass-edge);
    transition: .4s;
    position: relative;
    overflow: hidden;
@@ -1053,7 +1060,7 @@ body {
    font-size: 14px;
    font-weight: 500;
    transition: .3s;
-   backdrop-filter: blur(14px);
+   backdrop-filter: blur(25px) saturate(180%);
 }
 
 .certTab:hover {
@@ -1092,7 +1099,8 @@ body {
    padding: 15px;
    border-radius: 18px;
    border: 1px solid var(--glass-border);
-   backdrop-filter: blur(14px);
+   backdrop-filter: blur(25px) saturate(180%);
+   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 1px 1px var(--glass-edge);
    transition: border-color .3s, box-shadow .3s, transform .3s;
    width: 320px;
    position: relative;
@@ -1529,17 +1537,17 @@ body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn {
 }
 
 .cursor-outline.click-neon {
-   background: rgba(168, 85, 247, 0.3) !important;
-   border-color: #a855f7 !important;
-   box-shadow: 0 0 20px var(--accent), inset 0 0 15px var(--accent) !important;
+   background: var(--cursor-glow) !important;
+   border-color: #00f3ff !important;
+   box-shadow: 0 0 20px rgba(0, 243, 255, 0.8), inset 0 0 15px rgba(0, 243, 255, 0.6) !important;
    transform: translate(-50%, -50%) scale(0.9) !important;
    border-width: 2px !important;
 }
 
 .light .cursor-outline.click-neon {
-   background: rgba(250, 204, 21, 0.4) !important;
-   border-color: #facc15 !important;
-   box-shadow: 0 0 20px #facc15, inset 0 0 15px #facc15 !important;
+   background: var(--cursor-glow) !important;
+   border-color: #2563eb !important;
+   box-shadow: 0 0 20px rgba(37, 99, 235, 0.8), inset 0 0 15px rgba(37, 99, 235, 0.6) !important;
 }
 
 .profileWrapper {
