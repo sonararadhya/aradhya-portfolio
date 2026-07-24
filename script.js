@@ -870,7 +870,11 @@ if (typeof pdfjsLib !== 'undefined') {
 async function renderCertificates(category) {
    if (!certGrid) return;
    
-   // Clear grid and show loader
+   // Clear grid & free canvas bitmap memory
+   const oldCanvases = certGrid.querySelectorAll("canvas");
+   oldCanvases.forEach(c => { c.width = 0; c.height = 0; });
+   const oldImgs = certGrid.querySelectorAll("img");
+   oldImgs.forEach(i => { i.src = ''; });
    certGrid.innerHTML = '';
    certLoader.style.display = 'block';
    
@@ -897,30 +901,31 @@ async function renderCertificates(category) {
                img.title = `Aradhya Sonar Certificate: ${cleanTitle}`;
                canvasWrap.appendChild(img);
             } else if (typeof pdfjsLib !== 'undefined') {
-               const canvas = document.createElement("canvas");
-               canvas.setAttribute("aria-label", `Aradhya Sonar Certificate: ${cleanTitle}`);
-               canvas.setAttribute("title", `Aradhya Sonar Certificate: ${cleanTitle}`);
-               canvasWrap.appendChild(canvas);
-
                (async () => {
                   try {
                      const loadingTask = pdfjsLib.getDocument(basePath + file);
                      const pdf = await loadingTask.promise;
                      const page = await pdf.getPage(1);
                      
-                     const viewport = page.getViewport({ scale: 0.8 });
-                     const context = canvas.getContext("2d");
-                     canvas.height = viewport.height;
-                     canvas.width = viewport.width;
+                     const viewport = page.getViewport({ scale: 0.6 });
+                     const tempCanvas = document.createElement("canvas");
+                     tempCanvas.height = viewport.height;
+                     tempCanvas.width = viewport.width;
+                     const context = tempCanvas.getContext("2d");
 
-                     const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport
-                     };
-                     await page.render(renderContext).promise;
-                     const ph = canvasWrap.querySelector('.pdfPlaceholder');
-                     if (ph) ph.remove();
+                     await page.render({ canvasContext: context, viewport: viewport }).promise;
                      
+                     const img = document.createElement("img");
+                     img.src = tempCanvas.toDataURL("image/webp", 0.75);
+                     img.alt = `Aradhya Sonar Certificate: ${cleanTitle}`;
+                     img.loading = "lazy";
+
+                     canvasWrap.innerHTML = '';
+                     canvasWrap.appendChild(img);
+                     
+                     // Force browser garbage collection of heavy canvas bitmap
+                     tempCanvas.width = 0;
+                     tempCanvas.height = 0;
                      page.cleanup();
                      pdf.destroy();
                   } catch (err) {
