@@ -763,7 +763,7 @@ async function loadProjects() {
             const card = document.createElement("div");
             card.className = "projectCard";
             card.innerHTML = `
-<img class="projectImage" src="https://opengraph.githubassets.com/1/${githubUser}/${repo.name}" onerror="this.src='Images/profile.png'" alt="Preview" loading="lazy">
+<img class="projectImage" src="https://opengraph.githubassets.com/1/${githubUser}/${repo.name}" onerror="this.src='Images/profile.webp'" alt="Preview" loading="lazy">
 <h3>${repo.name}</h3>
 <p>${repo.description || "Project repository"}</p>
 <div class="tech">
