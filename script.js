@@ -788,18 +788,26 @@ document.addEventListener("DOMContentLoaded", () => {
    CERTIFICATES RENDERING (PDF.JS + VANILLA TILT)
 ===================== */
 const certData = {
-   "CORE TECHNICAL CERTIFICATIONS": [
-      "Android using Kotlin.pdf", "Bootstrap.pdf", "C & CPP.pdf", 
-      "C LANG.pdf", "CPP ADVANCE.pdf", "CPP_TEST.pdf", 
-      "CYBER SANSKAR WORKSHOP.pdf", "LINUX Programme.pdf", "LINUX TEST.pdf", 
-      "NodeJS Bootcamp.pdf", "PHP MYSQL.pdf", "R Programming.pdf"
+   "CORE TECHNICAL - PROFESSIONAL CERTIFICATIONS": [
+      "AI-900 TRAINING.jpg", "AZ-900 TRAINING.jpg", "Cyber Crime Analyst.pdf", 
+      "Cyber Forensics Investigator.pdf", "DP-900 TRAINING.jpg", "FULL STACK.pdf", 
+      "IBM Getting Started with Artificial Intelligence.pdf", "JAVA.pdf", 
+      "NodeJS Bootcamp.pdf", "PL-900 TRAINING.jpg", "POWER BI INTERNSHIP.jpg", 
+      "PROJECT CERTIFICATE.pdf", "Python and Flask.pdf", "ReactJS.pdf"
    ],
-   "SUPPORTING TECHNICAL CERTIFICATIONS": [
-      "Android.pdf", "CSS, JAVASCRIPT AND PYTHON.pdf", "Cyber Crime Analyst.pdf", 
-      "Cyber Forensics Investigator.pdf", "FULL STACK.pdf", "Hackerrank javascript.pdf", 
-      "JAVA.pdf", "Javascript.pdf", "PHP.pdf", "Python and Flask.pdf", "ReactJS.pdf"
+   "SUPPORTING TECHNICAL & SKILL CERTIFICATIONS": [
+      "Android using Kotlin.pdf", "Android.pdf", "Bootstrap.pdf", "C & CPP.pdf", 
+      "C LANG.pdf", "CPP ADVANCE.pdf", "CPP_TEST.pdf", "CSS, JAVASCRIPT AND PYTHON.pdf", 
+      "CYBER SANSKAR WORKSHOP.pdf", "Hackerrank javascript.pdf", "INTEL AI APPRECIATE.png", 
+      "INTEL AI AWARE.png", "Javascript.pdf", "LINUX Programme.pdf", "LINUX TEST.pdf", 
+      "PHP MYSQL.pdf", "PHP.pdf", "R Programming.pdf"
    ],
-   "EXTRACURRICULAR AND NON-TECHNICAL CERTIFICATIONS": [
+   "DIGITAL BADGES & MICRO-CREDENTIALS": [
+      "Aradhya Santosh Sonar_AI_APPRECIATE_BADGE.png", 
+      "Aradhya Santosh Sonar_AI_AWARE_BADGE.png", 
+      "getting-started-with-artificial-intelligence (1).png"
+   ],
+   "CO-CURRICULAR & EXTRACURRICULAR CERTIFICATIONS": [
       "ARTICLE WRITING RANK 3.pdf", "CQUIZ.pdf", "PHOTOGRAPHY RANK 1.pdf", 
       "POEM WRITING.pdf", "POSTER PRESENTATION.pdf", "Photography.pdf", 
       "QUIZ.pdf", "QuizSci.pdf", "Speech.pdf"
@@ -816,7 +824,7 @@ if (typeof pdfjsLib !== 'undefined') {
 }
 
 async function renderCertificates(category) {
-   if (!certGrid || typeof pdfjsLib === 'undefined') return;
+   if (!certGrid) return;
    
    // Clear grid and show loader
    certGrid.innerHTML = '';
@@ -825,51 +833,66 @@ async function renderCertificates(category) {
    const files = certData[category] || [];
    const basePath = `CERTIFICATES/${category}/`;
 
-   // Create an IntersectionObserver for lazy rendering PDFs
-   const pdfObserver = new IntersectionObserver((entries, observer) => {
+   // Create an IntersectionObserver for lazy rendering PDFs & images
+   const certObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
          if (entry.isIntersecting) {
-            const canvas = entry.target;
-            const file = canvas.getAttribute("data-file");
-            const basePath = canvas.getAttribute("data-basepath");
+            const canvasWrap = entry.target;
+            const file = canvasWrap.getAttribute("data-file");
+            const basePath = canvasWrap.getAttribute("data-basepath");
             
-            // Stop observing once we start rendering
-            observer.unobserve(canvas);
+            observer.unobserve(canvasWrap);
             
-            // Render the PDF
-            (async () => {
-               try {
-                  const loadingTask = pdfjsLib.getDocument(basePath + file);
-                  const pdf = await loadingTask.promise;
-                  const page = await pdf.getPage(1);
-                  
-                  // Reduced scale from 1.5 to 0.8 for massive memory/CPU savings
-                  const viewport = page.getViewport({ scale: 0.8 });
-                  const context = canvas.getContext("2d");
-                  canvas.height = viewport.height;
-                  canvas.width = viewport.width;
+            const ext = file.substring(file.lastIndexOf('.')).toLowerCase();
+            const cleanTitle = file.replace(/\.[^/.]+$/, "");
 
-                  const renderContext = {
-                     canvasContext: context,
-                     viewport: viewport
-                  };
-                  await page.render(renderContext).promise;
-                  
-                  // CRITICAL: Cleanup memory after rendering!
-                  page.cleanup();
-                  pdf.destroy();
-               } catch (err) {
-                  console.error("Error rendering PDF:", file, err);
-                  const wrap = canvas.parentElement;
-                  if(wrap) wrap.innerHTML = "<p style='color: #888; font-size: 12px; text-align: center;'>Preview not available</p>";
-               }
-            })();
+            if (['.png', '.jpg', '.jpeg', '.webp'].includes(ext)) {
+               const img = document.createElement("img");
+               img.src = basePath + file;
+               img.alt = `Aradhya Sonar Certificate: ${cleanTitle}`;
+               img.title = `Aradhya Sonar Certificate: ${cleanTitle}`;
+               canvasWrap.appendChild(img);
+            } else if (typeof pdfjsLib !== 'undefined') {
+               const canvas = document.createElement("canvas");
+               canvas.setAttribute("aria-label", `Aradhya Sonar Certificate: ${cleanTitle}`);
+               canvas.setAttribute("title", `Aradhya Sonar Certificate: ${cleanTitle}`);
+               canvasWrap.appendChild(canvas);
+
+               (async () => {
+                  try {
+                     const loadingTask = pdfjsLib.getDocument(basePath + file);
+                     const pdf = await loadingTask.promise;
+                     const page = await pdf.getPage(1);
+                     
+                     const viewport = page.getViewport({ scale: 0.8 });
+                     const context = canvas.getContext("2d");
+                     canvas.height = viewport.height;
+                     canvas.width = viewport.width;
+
+                     const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                     };
+                     await page.render(renderContext).promise;
+                     
+                     page.cleanup();
+                     pdf.destroy();
+                  } catch (err) {
+                     console.error("Error rendering PDF:", file, err);
+                     canvasWrap.innerHTML = "<p style='color: #888; font-size: 12px; text-align: center;'>Preview not available</p>";
+                  }
+               })();
+            }
          }
       });
    }, { rootMargin: "200px 0px", threshold: 0.01 });
 
    for (const file of files) {
       try {
+         const cleanTitle = file.replace(/\.[^/.]+$/, "");
+         const ext = file.substring(file.lastIndexOf('.')).toLowerCase();
+         const isImg = ['.png', '.jpg', '.jpeg', '.webp'].includes(ext);
+
          // Create DOM elements
          const card = document.createElement("div");
          card.className = "certCard";
@@ -881,27 +904,20 @@ async function renderCertificates(category) {
 
          const canvasWrap = document.createElement("div");
          canvasWrap.className = "certCanvasWrap";
-         
-         const canvas = document.createElement("canvas");
-         // SEO / Accessibility
-         canvas.setAttribute("aria-label", `Aradhya Sonar Certificate: ${file.replace(".pdf", "")}`);
-         canvas.setAttribute("title", `Aradhya Sonar Certificate: ${file.replace(".pdf", "")}`);
-         canvas.setAttribute("data-file", file);
-         canvas.setAttribute("data-basepath", basePath);
-         
-         canvasWrap.appendChild(canvas);
+         canvasWrap.setAttribute("data-file", file);
+         canvasWrap.setAttribute("data-basepath", basePath);
 
          const title = document.createElement("div");
          title.className = "certTitle";
-         title.textContent = file.replace(".pdf", "");
+         title.textContent = cleanTitle;
 
          const overlay = document.createElement("div");
          overlay.className = "certViewOverlay";
          const viewBtn = document.createElement("a");
          viewBtn.href = basePath + file;
          viewBtn.target = "_blank";
-         viewBtn.textContent = "View Full PDF";
-         viewBtn.setAttribute("aria-label", `View full PDF of ${file.replace(".pdf", "")}`);
+         viewBtn.textContent = isImg ? "View Image" : "View Full PDF";
+         viewBtn.setAttribute("aria-label", `View ${cleanTitle}`);
          overlay.appendChild(viewBtn);
 
          card.appendChild(canvasWrap);
@@ -910,8 +926,8 @@ async function renderCertificates(category) {
          
          certGrid.appendChild(card);
 
-         // Observe canvas for lazy loading
-         pdfObserver.observe(canvas);
+         // Observe canvasWrap for lazy loading
+         certObserver.observe(canvasWrap);
 
       } catch (err) {
          console.error("Error setting up card:", err);
@@ -953,7 +969,7 @@ let certsInitialized = false;
 const certSectionObs = new IntersectionObserver((entries) => {
    if (entries[0].isIntersecting && !certsInitialized) {
       certsInitialized = true;
-      renderCertificates("CORE TECHNICAL CERTIFICATIONS");
+      renderCertificates("CORE TECHNICAL - PROFESSIONAL CERTIFICATIONS");
       certSectionObs.disconnect();
    }
 }, { threshold: 0.1 });
