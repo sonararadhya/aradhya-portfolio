@@ -789,18 +789,18 @@ document.addEventListener("DOMContentLoaded", () => {
 ===================== */
 const certData = {
    "CORE TECHNICAL - PROFESSIONAL CERTIFICATIONS": [
-      "AI-900 TRAINING.jpg", "AZ-900 TRAINING.jpg", "Cyber Crime Analyst.pdf", 
-      "Cyber Forensics Investigator.pdf", "DP-900 TRAINING.jpg", "FULL STACK.pdf", 
-      "IBM Getting Started with Artificial Intelligence.pdf", "JAVA.pdf", 
-      "NodeJS Bootcamp.pdf", "PL-900 TRAINING.jpg", "POWER BI INTERNSHIP.jpg", 
-      "PROJECT CERTIFICATE.pdf", "Python and Flask.pdf", "ReactJS.pdf"
+      "AI-900 TRAINING.jpg", "AZ-900 TRAINING.jpg", "DP-900 TRAINING.jpg", 
+      "IBM Getting Started with Artificial Intelligence.pdf", "PL-900 TRAINING.jpg", 
+      "POWER BI INTERNSHIP.jpg", "PROJECT CERTIFICATE.pdf"
    ],
    "SUPPORTING TECHNICAL & SKILL CERTIFICATIONS": [
       "Android using Kotlin.pdf", "Android.pdf", "Bootstrap.pdf", "C & CPP.pdf", 
       "C LANG.pdf", "CPP ADVANCE.pdf", "CPP_TEST.pdf", "CSS, JAVASCRIPT AND PYTHON.pdf", 
-      "CYBER SANSKAR WORKSHOP.pdf", "Hackerrank javascript.pdf", "INTEL AI APPRECIATE.png", 
-      "INTEL AI AWARE.png", "Javascript.pdf", "LINUX Programme.pdf", "LINUX TEST.pdf", 
-      "PHP MYSQL.pdf", "PHP.pdf", "R Programming.pdf"
+      "CYBER SANSKAR WORKSHOP.pdf", "Cyber Crime Analyst.pdf", "Cyber Forensics Investigator.pdf", 
+      "FULL STACK.pdf", "Hackerrank javascript.pdf", "INTEL AI APPRECIATE.png", 
+      "INTEL AI AWARE.png", "JAVA.pdf", "Javascript.pdf", "LINUX Programme.pdf", 
+      "LINUX TEST.pdf", "NodeJS Bootcamp.pdf", "PHP MYSQL.pdf", "PHP.pdf", 
+      "Python and Flask.pdf", "R Programming.pdf", "ReactJS.pdf"
    ],
    "DIGITAL BADGES & MICRO-CREDENTIALS": [
       "Aradhya Santosh Sonar_AI_APPRECIATE_BADGE.png", 
