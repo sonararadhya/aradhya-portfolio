@@ -870,79 +870,22 @@ if (typeof pdfjsLib !== 'undefined') {
 async function renderCertificates(category) {
    if (!certGrid) return;
    
-   // Clear grid & free canvas bitmap memory
-   const oldCanvases = certGrid.querySelectorAll("canvas");
-   oldCanvases.forEach(c => { c.width = 0; c.height = 0; });
+   // Clear grid & free img memory
    const oldImgs = certGrid.querySelectorAll("img");
    oldImgs.forEach(i => { i.src = ''; });
    certGrid.innerHTML = '';
    certLoader.style.display = 'block';
    
    const files = certData[category] || [];
-   const basePath = `CERTIFICATES/${category}/`;
-
-   // Create an IntersectionObserver for lazy rendering PDFs & images
-   const certObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-         if (entry.isIntersecting) {
-            const canvasWrap = entry.target;
-            const file = canvasWrap.getAttribute("data-file");
-            const basePath = canvasWrap.getAttribute("data-basepath");
-            
-            observer.unobserve(canvasWrap);
-            
-            const ext = file.substring(file.lastIndexOf('.')).toLowerCase();
-            const cleanTitle = file.replace(/\.[^/.]+$/, "");
-
-            if (['.png', '.jpg', '.jpeg', '.webp'].includes(ext)) {
-               const img = document.createElement("img");
-               img.src = basePath + file;
-               img.alt = `Aradhya Sonar Certificate: ${cleanTitle}`;
-               img.title = `Aradhya Sonar Certificate: ${cleanTitle}`;
-               canvasWrap.appendChild(img);
-            } else if (typeof pdfjsLib !== 'undefined') {
-               (async () => {
-                  try {
-                     const loadingTask = pdfjsLib.getDocument(basePath + file);
-                     const pdf = await loadingTask.promise;
-                     const page = await pdf.getPage(1);
-                     
-                     const viewport = page.getViewport({ scale: 0.6 });
-                     const tempCanvas = document.createElement("canvas");
-                     tempCanvas.height = viewport.height;
-                     tempCanvas.width = viewport.width;
-                     const context = tempCanvas.getContext("2d");
-
-                     await page.render({ canvasContext: context, viewport: viewport }).promise;
-                     
-                     const img = document.createElement("img");
-                     img.src = tempCanvas.toDataURL("image/webp", 0.75);
-                     img.alt = `Aradhya Sonar Certificate: ${cleanTitle}`;
-                     img.loading = "lazy";
-
-                     canvasWrap.innerHTML = '';
-                     canvasWrap.appendChild(img);
-                     
-                     // Force browser garbage collection of heavy canvas bitmap
-                     tempCanvas.width = 0;
-                     tempCanvas.height = 0;
-                     page.cleanup();
-                     pdf.destroy();
-                  } catch (err) {
-                     console.error("Error rendering PDF:", file, err);
-                     canvasWrap.innerHTML = "<p style='color: #888; font-size: 12px; text-align: center;'>Preview not available</p>";
-                  }
-               })();
-            }
-         }
-      });
-   }, { rootMargin: "200px 0px", threshold: 0.01 });
+   const originalBasePath = `CERTIFICATES/${category}/`;
+   const webpBasePath = `CERTIFICATES/WEBP_${category}/`;
 
    for (const file of files) {
       try {
          const cleanTitle = file.replace(/\.[^/.]+$/, "");
          const ext = file.substring(file.lastIndexOf('.')).toLowerCase();
          const isImg = ['.png', '.jpg', '.jpeg', '.webp'].includes(ext);
+         const webpFilename = cleanTitle + '.webp';
 
          // Create DOM elements
          const card = document.createElement("div");
@@ -955,11 +898,13 @@ async function renderCertificates(category) {
 
          const canvasWrap = document.createElement("div");
          canvasWrap.className = "certCanvasWrap";
-         canvasWrap.setAttribute("data-file", file);
-         canvasWrap.setAttribute("data-basepath", basePath);
-         if (!isImg) {
-            canvasWrap.innerHTML = `<div class="pdfPlaceholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;"><i class="ri-file-pdf-2-line" style="font-size:2.5rem;color:#e11d48;"></i><span style="font-size:11px;color:#666;margin-top:6px;text-align:center;line-height:1.2;">${cleanTitle}</span></div>`;
-         }
+         
+         const img = document.createElement("img");
+         img.src = webpBasePath + webpFilename;
+         img.alt = `Aradhya Sonar Certificate: ${cleanTitle}`;
+         img.title = `Aradhya Sonar Certificate: ${cleanTitle}`;
+         img.loading = "lazy";
+         canvasWrap.appendChild(img);
 
          const title = document.createElement("div");
          title.className = "certTitle";
@@ -968,9 +913,9 @@ async function renderCertificates(category) {
          const overlay = document.createElement("div");
          overlay.className = "certViewOverlay";
          const viewBtn = document.createElement("a");
-         viewBtn.href = basePath + file;
+         viewBtn.href = originalBasePath + file;
          viewBtn.target = "_blank";
-         viewBtn.textContent = isImg ? "View Image" : "View Full PDF";
+         viewBtn.textContent = isImg ? "View Full Image" : "View Full PDF";
          viewBtn.setAttribute("aria-label", `View ${cleanTitle}`);
          overlay.appendChild(viewBtn);
 
@@ -979,10 +924,6 @@ async function renderCertificates(category) {
          card.appendChild(overlay);
          
          certGrid.appendChild(card);
-
-         // Observe canvasWrap for lazy loading
-         certObserver.observe(canvasWrap);
-
       } catch (err) {
          console.error("Error setting up card:", err);
       }
@@ -1000,7 +941,7 @@ async function renderCertificates(category) {
    if (typeof gsap !== 'undefined') {
       gsap.fromTo(".certCard", 
          { opacity: 0, y: 40, scale: 0.95 },
-         { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+         { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.05, ease: "power2.out" }
       );
    }
 }
