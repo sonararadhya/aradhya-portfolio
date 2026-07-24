@@ -138,7 +138,10 @@
       <div class="profileWrapper">
         <div class="profileLoader"></div>
         <div class="profile">
-          <img src="Images/profile.png" alt="Profile">
+          <picture>
+            <source srcset="Images/profile.webp" type="image/webp">
+            <img src="Images/profile.png" alt="Profile" loading="eager" fetchpriority="high">
+          </picture>
         </div>
       </div>
 
@@ -200,11 +203,23 @@
   <section id="skills" class="section">
     <div id="skills-3d-container"></div>
     <h2>My Skills</h2>
-    <p class="skillsHint">Hover over a card to see details</p>
+    <p class="skillsHint">Hover or tap on a card to see details</p>
+    
+    <div class="skillsFilterWrap">
+      <button class="skillTabBtn active" data-category="all">All (55)</button>
+      <button class="skillTabBtn" data-category="programming">Languages</button>
+      <button class="skillTabBtn" data-category="frontend">Frontend</button>
+      <button class="skillTabBtn" data-category="backend">Backend & APIs</button>
+      <button class="skillTabBtn" data-category="database">Databases</button>
+      <button class="skillTabBtn" data-category="cloud">Cloud & DevOps</button>
+      <button class="skillTabBtn" data-category="ai">AI & Analytics</button>
+      <button class="skillTabBtn" data-category="agile">Agile & PM</button>
+    </div>
+
     <div class="skillsGrid">
 
       <!-- Programming Languages -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="programming">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-python-plain"></i><span>Python</span></div>
           <div class="flipBack">
@@ -215,7 +230,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="programming">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-java-plain"></i><span>Java</span></div>
           <div class="flipBack">
@@ -226,7 +241,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="programming">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-cplusplus-plain"></i><span>C++</span></div>
           <div class="flipBack">
@@ -237,7 +252,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="programming">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-c-plain"></i><span>C</span></div>
           <div class="flipBack">
@@ -248,7 +263,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="programming">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-r-plain"></i><span>R</span></div>
           <div class="flipBack">
@@ -259,7 +274,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="programming">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-javascript-plain"></i><span>JavaScript</span></div>
           <div class="flipBack">
@@ -270,7 +285,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="programming">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-php-plain"></i><span>PHP</span></div>
           <div class="flipBack">
@@ -282,7 +297,7 @@
       </div>
 
       <!-- Frontend Development -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="frontend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-react-original"></i><span>ReactJS</span></div>
           <div class="flipBack">
@@ -293,7 +308,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="frontend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-angularjs-plain"></i><span>Angular</span></div>
           <div class="flipBack">
@@ -304,7 +319,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="frontend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-html5-plain"></i><span>HTML5</span></div>
           <div class="flipBack">
@@ -315,7 +330,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="frontend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-css3-plain"></i><span>CSS3</span></div>
           <div class="flipBack">
@@ -327,7 +342,7 @@
       </div>
 
       <!-- Backend & Frameworks -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-nodejs-plain"></i><span>NodeJS</span></div>
           <div class="flipBack">
@@ -338,7 +353,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-express-original"></i><span>Express.js</span></div>
           <div class="flipBack">
@@ -349,7 +364,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-fastapi-plain"></i><span>FastAPI</span></div>
           <div class="flipBack">
@@ -361,7 +376,7 @@
       </div>
 
       <!-- Databases -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="database">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-mongodb-plain"></i><span>MongoDB</span></div>
           <div class="flipBack">
@@ -372,7 +387,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="database">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-database-2-fill" style="font-size:2rem;color:#3ecf8e;"></i><span>Supabase</span></div>
           <div class="flipBack">
@@ -383,7 +398,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="database">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-mysql-plain"></i><span>SQL</span></div>
           <div class="flipBack">
@@ -395,7 +410,7 @@
       </div>
 
       <!-- Data Analytics & BI -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-bar-chart-fill" style="font-size:2rem;color:#facc15;"></i><span>Power BI</span></div>
           <div class="flipBack">
@@ -406,7 +421,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-bar-chart-2-fill" style="font-size:2rem;color:#e97627;"></i><span>Tableau</span></div>
           <div class="flipBack">
@@ -417,7 +432,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-pie-chart-2-fill" style="font-size:2rem;color:#3b82f6;"></i><span>Data Analytics</span></div>
           <div class="flipBack">
@@ -428,7 +443,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-function-line" style="font-size:2rem;color:#a855f7;"></i><span>DAX & Power Query</span></div>
           <div class="flipBack">
@@ -440,7 +455,7 @@
       </div>
 
       <!-- Artificial Intelligence & Machine Learning -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-robot-line" style="font-size:2rem;color:#8b5cf6;"></i><span>Artificial Intelligence</span></div>
           <div class="flipBack">
@@ -451,7 +466,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-node-tree" style="font-size:2rem;color:#10b981;"></i><span>Machine Learning</span></div>
           <div class="flipBack">
@@ -462,7 +477,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-openai-fill" style="font-size:2rem;color:#10a37f;"></i><span>Generative AI</span></div>
           <div class="flipBack">
@@ -473,7 +488,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-cpu-line" style="font-size:2rem;color:#06b6d4;"></i><span>Agentic AI</span></div>
           <div class="flipBack">
@@ -485,7 +500,7 @@
       </div>
 
       <!-- Cloud & Infra -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-amazonwebservices-plain"></i><span>AWS</span></div>
           <div class="flipBack">
@@ -496,7 +511,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-azure-plain"></i><span>Microsoft Azure</span></div>
           <div class="flipBack">
@@ -507,7 +522,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-pulse-line" style="font-size:2rem;color:#0078d4;"></i><span>Microsoft Fabric</span></div>
           <div class="flipBack">
@@ -519,7 +534,7 @@
       </div>
 
       <!-- Tools & DevOps -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-linux-plain"></i><span>Linux</span></div>
           <div class="flipBack">
@@ -530,7 +545,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-git-plain"></i><span>Git</span></div>
           <div class="flipBack">
@@ -541,7 +556,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-github-original"></i><span>GitHub</span></div>
           <div class="flipBack">
@@ -552,7 +567,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-gitlab-plain" style="color:#e24329;"></i><span>GitLab</span></div>
           <div class="flipBack">
@@ -564,7 +579,7 @@
       </div>
 
       <!-- Modern Web & Frontend -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="programming">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-typescript-plain"></i><span>TypeScript</span></div>
           <div class="flipBack">
@@ -575,7 +590,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="frontend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-nextjs-original"></i><span>Next.js</span></div>
           <div class="flipBack">
@@ -586,7 +601,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="frontend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-tailwindcss-plain"></i><span>Tailwind CSS</span></div>
           <div class="flipBack">
@@ -597,7 +612,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="frontend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-bootstrap-plain"></i><span>Bootstrap</span></div>
           <div class="flipBack">
@@ -608,7 +623,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="frontend">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-flashlight-fill" style="font-size:2rem;color:#bd34fe;"></i><span>Vite</span></div>
           <div class="flipBack">
@@ -620,7 +635,7 @@
       </div>
 
       <!-- Backend & API Engineering -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-django-plain"></i><span>Django</span></div>
           <div class="flipBack">
@@ -631,7 +646,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-flask-original"></i><span>Flask</span></div>
           <div class="flipBack">
@@ -642,7 +657,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-code-s-slash-line" style="font-size:2rem;color:#6366f1;"></i><span>REST API</span></div>
           <div class="flipBack">
@@ -653,7 +668,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-file-code-line" style="font-size:2rem;color:#85ea2d;"></i><span>OpenAPI</span></div>
           <div class="flipBack">
@@ -664,7 +679,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-shield-keyhole-line" style="font-size:2rem;color:#d97706;"></i><span>JWT</span></div>
           <div class="flipBack">
@@ -675,7 +690,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="backend">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-lock-password-line" style="font-size:2rem;color:#ec4899;"></i><span>OAuth</span></div>
           <div class="flipBack">
@@ -687,7 +702,7 @@
       </div>
 
       <!-- Advanced Databases & Caching -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="database">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
           <div class="flipBack">
@@ -698,7 +713,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="database">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-redis-plain"></i><span>Redis</span></div>
           <div class="flipBack">
@@ -709,7 +724,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="database">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-database-2-line" style="font-size:2rem;color:#ff9900;"></i><span>DynamoDB</span></div>
           <div class="flipBack">
@@ -721,7 +736,7 @@
       </div>
 
       <!-- DevOps & Containers -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-docker-plain"></i><span>Docker</span></div>
           <div class="flipBack">
@@ -732,7 +747,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-kubernetes-plain"></i><span>Kubernetes</span></div>
           <div class="flipBack">
@@ -743,7 +758,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="cloud">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-bash-plain"></i><span>Bash/Shell Scripting</span></div>
           <div class="flipBack">
@@ -755,7 +770,7 @@
       </div>
 
       <!-- Data Analytics & Cloud AI -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-file-excel-2-fill" style="font-size:2rem;color:#107c41;"></i><span>Excel</span></div>
           <div class="flipBack">
@@ -766,7 +781,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-cloud-line" style="font-size:2rem;color:#0078d4;"></i><span>Azure AI Studio</span></div>
           <div class="flipBack">
@@ -777,7 +792,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="ai">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-openai-line" style="font-size:2rem;color:#0078d4;"></i><span>Azure OpenAI</span></div>
           <div class="flipBack">
@@ -789,7 +804,7 @@
       </div>
 
       <!-- Agile & Project Management -->
-      <div class="flipScene">
+      <div class="flipScene" data-category="agile">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-refresh-line" style="font-size:2rem;color:#f59e0b;"></i><span>Agile</span></div>
           <div class="flipBack">
@@ -800,7 +815,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="agile">
         <div class="flipInner">
           <div class="flipFront"><i class="devicon-jira-plain"></i><span>JIRA</span></div>
           <div class="flipBack">
@@ -811,7 +826,7 @@
         </div>
       </div>
 
-      <div class="flipScene">
+      <div class="flipScene" data-category="agile">
         <div class="flipInner">
           <div class="flipFront"><i class="ri-team-line" style="font-size:2rem;color:#06b6d4;"></i><span>Scrum</span></div>
           <div class="flipBack">

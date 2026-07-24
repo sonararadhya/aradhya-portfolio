@@ -416,6 +416,45 @@ document.addEventListener('visibilitychange', () => {
   else masterLoop();
 });
 
+/* =====================
+   SKILLS FILTER & TOUCH FLIP
+===================== */
+document.addEventListener("DOMContentLoaded", () => {
+   const skillTabs = document.querySelectorAll(".skillTabBtn");
+   const skillCards = document.querySelectorAll(".flipScene");
+
+   skillTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+         skillTabs.forEach(t => t.classList.remove("active"));
+         tab.classList.add("active");
+         
+         const cat = tab.getAttribute("data-category");
+         
+         skillCards.forEach(card => {
+            const cardCat = card.getAttribute("data-category");
+            if (cat === "all" || cardCat === cat) {
+               card.style.display = "block";
+               if (typeof gsap !== 'undefined') {
+                  gsap.fromTo(card, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" });
+               }
+            } else {
+               card.style.display = "none";
+            }
+         });
+      });
+   });
+
+   // Touch / Click flip toggle for mobile friendliness
+   skillCards.forEach(card => {
+      card.addEventListener("click", (e) => {
+         // Avoid double-triggering if user clicks inside back link
+         if (e.target.tagName !== 'A') {
+            card.classList.toggle("flipped");
+         }
+      });
+   });
+});
+
 
 window.addEventListener("resize", () => {
    cameraBg.aspect = window.innerWidth / window.innerHeight;
@@ -879,6 +918,8 @@ async function renderCertificates(category) {
                         viewport: viewport
                      };
                      await page.render(renderContext).promise;
+                     const ph = canvasWrap.querySelector('.pdfPlaceholder');
+                     if (ph) ph.remove();
                      
                      page.cleanup();
                      pdf.destroy();
@@ -911,6 +952,9 @@ async function renderCertificates(category) {
          canvasWrap.className = "certCanvasWrap";
          canvasWrap.setAttribute("data-file", file);
          canvasWrap.setAttribute("data-basepath", basePath);
+         if (!isImg) {
+            canvasWrap.innerHTML = `<div class="pdfPlaceholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;"><i class="ri-file-pdf-2-line" style="font-size:2.5rem;color:#e11d48;"></i><span style="font-size:11px;color:#666;margin-top:6px;text-align:center;line-height:1.2;">${cleanTitle}</span></div>`;
+         }
 
          const title = document.createElement("div");
          title.className = "certTitle";
