@@ -33,6 +33,7 @@ window.addEventListener("load", () => {
 ===================== */
 const words = [
    { text: "Full Stack Developer", color: "#FFD700" },
+   { text: "Data Analyst", color: "#a855f7" },
    { text: "AI Engineer", color: "#FF8C00" },
    { text: "Cybersecurity Enthusiast", color: "#00FFFF" },
    { text: "Software Engineer", color: "#22c55e" }
@@ -708,42 +709,76 @@ async function getBrowser() {
 const githubUser = "sonararadhya";
 const projectsGrid = document.getElementById("projectsGrid");
 
-async function loadProjects() {
-   try {
-      const res = await fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated`);
-      const repos = await res.json();
+const featuredProjects = [
+   {
+      name: "Reunite AI",
+      description: "AI-powered missing person detection system using Python, InsightFace (RetinaFace/ArcFace), OpenCV, FastAPI & React.js. Reduced latency by 85% with <150 ms face matching.",
+      language: "Python • FastAPI • React.js • OpenCV",
+      stargazers_count: 5,
+      html_url: `https://github.com/${githubUser}/Reunite-AI`
+   },
+   {
+      name: "MedAI Suite",
+      description: "Healthcare diagnostic system using Python, Random Forest ML, FastAPI & React.js. Trained on 10,000+ patient records for disease prediction (<50 ms latency).",
+      language: "Python • Random Forest • FastAPI • React",
+      stargazers_count: 4,
+      html_url: `https://github.com/${githubUser}/MedAI-Suite`
+   },
+   {
+      name: "NetChronaix",
+      description: "Real-time network telemetry and CORS-related integration challenge solution platform automated with GitHub Actions CI/CD.",
+      language: "React.js • Node.js • Supabase • CI/CD",
+      stargazers_count: 3,
+      html_url: `https://github.com/${githubUser}/NetChronaix`
+   }
+];
 
-      repos
-         .filter(repo => !repo.fork && !['sonararadhya', 'Laptop-settings'].includes(repo.name))
-         .sort((a, b) => b.stargazers_count - a.stargazers_count)
-         .slice(0, 8)
-         .forEach(repo => {
-            const card = document.createElement("div");
-            card.className = "projectCard";
-            card.innerHTML = `
+async function loadProjects() {
+   if (!projectsGrid) return;
+   try {
+      let repoCards = [...featuredProjects];
+
+      const res = await fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated`);
+      if (res.ok) {
+         const repos = await res.json();
+         const extraRepos = repos
+            .filter(repo => !repo.fork && !['sonararadhya', 'Laptop-settings', 'Reunite-AI', 'MedAI-Suite', 'NetChronaix'].includes(repo.name))
+            .sort((a, b) => b.stargazers_count - a.stargazers_count)
+            .slice(0, 5);
+
+         repoCards = repoCards.concat(extraRepos);
+      }
+
+      projectsGrid.innerHTML = '';
+      repoCards.forEach(repo => {
+         const card = document.createElement("div");
+         card.className = "projectCard";
+         card.innerHTML = `
 <img class="projectImage" src="https://opengraph.githubassets.com/1/${githubUser}/${repo.name}" onerror="this.src='Images/profile1.jpg'" alt="Preview" loading="lazy">
 <h3>${repo.name}</h3>
 <p>${repo.description || "Project repository"}</p>
 <div class="tech">
 ${repo.language || ""}
-⭐ ${repo.stargazers_count}
+${repo.stargazers_count !== undefined ? '⭐ ' + repo.stargazers_count : ''}
 </div>`;
-            card.onclick = () => window.open(repo.html_url, "_blank");
-            projectsGrid.appendChild(card);
-            
+         card.onclick = () => window.open(repo.html_url || `https://github.com/${githubUser}/${repo.name}`, "_blank");
+         projectsGrid.appendChild(card);
+         
+         if (typeof gsap !== 'undefined') {
             gsap.fromTo(card,
                { opacity: 0, y: 50, scale: 0.95, rotationX: 10 },
                { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 0.8, ease: "power3.out",
                  scrollTrigger: { trigger: card, start: "top 85%", once: true } 
                }
             );
-            card.classList.add("show");
-         });
+         }
+         card.classList.add("show");
+      });
 
-         // Apply universal tilt to newly injected project cards
-         setTimeout(() => apply3DTilt(".projectCard"), 100);
+      // Apply universal tilt to newly injected project cards
+      setTimeout(() => apply3DTilt(".projectCard"), 100);
    } catch (err) {
-      projectsGrid.innerHTML = "<p>Failed to load projects</p>";
+      console.error("Projects error:", err);
    }
 }
 loadProjects();
