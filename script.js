@@ -1076,3 +1076,223 @@ if (certResetZoomBtn) {
       if (certModalImg) certModalImg.style.transform = `scale(1)`;
    });
 }
+
+/* =====================
+   DUAL-MODE AI CHATBOT ENGINE (LOCAL JS + GROQ LLAMA 3.1)
+===================== */
+document.addEventListener("DOMContentLoaded", () => {
+   const chatbotToggleBtn = document.getElementById("chatbotToggleBtn");
+   const chatbotContainer = document.getElementById("chatbotContainer");
+   const closeChatbotBtn = document.getElementById("closeChatbotBtn");
+   const chatForm = document.getElementById("chatForm");
+   const chatInput = document.getElementById("chatInput");
+   const chatMessages = document.getElementById("chatMessages");
+   const chatStatusText = document.getElementById("chatStatusText");
+   const jsBotTab = document.getElementById("jsBotTab");
+   const groqBotTab = document.getElementById("groqBotTab");
+   const groqSettingsBar = document.getElementById("groqSettingsBar");
+   const groqApiKeyInput = document.getElementById("groqApiKeyInput");
+   const saveApiKeyBtn = document.getElementById("saveApiKeyBtn");
+
+   if (!chatbotToggleBtn || !chatbotContainer) return;
+
+   let currentMode = "js"; // "js" or "groq"
+   let groqApiKey = localStorage.getItem("groq_api_key") || "";
+   if (groqApiKeyInput && groqApiKey) groqApiKeyInput.value = groqApiKey;
+
+   // Portfolio Local Knowledge Base
+   const LOCAL_FAQ_DB = [
+      {
+         keywords: ["project", "projects", "work", "built", "apps", "chess7knight", "netchronaix", "portfolio"],
+         response: "Aradhya's top projects include:<br>• <b>Chess7Knight:</b> Live MERN Stack online chess app with custom themes & ELO system (chess7knight.vercel.app)<br>• <b>NetChronaix:</b> Real-time network telemetry & analysis platform (netchronaix.vercel.app)<br>• <b>Reunite AI:</b> Facial recognition pipeline using OpenCV & InsightFace<br>• <b>MedAI Suite:</b> Diagnostic ML platform."
+      },
+      {
+         keywords: ["skill", "skills", "tech", "stack", "react", "python", "power bi", "dax", "javascript", "node", "express", "sql"],
+         response: "Aradhya's core skill set covers:<br>• <b>Languages:</b> Python, JavaScript, TypeScript, C++, Java, R, SQL<br>• <b>Frontend:</b> React.js, Next.js, HTML5, CSS3, Tailwind CSS<br>• <b>Backend:</b> Node.js, Express.js, FastAPI, Django, REST APIs<br>• <b>Data & AI:</b> Power BI, DAX, Power Query, Microsoft Fabric, OpenCV, Scikit-Learn<br>• <b>Cloud & Infra:</b> AWS, Azure, Supabase, MongoDB, Git, Docker."
+      },
+      {
+         keywords: ["experience", "internship", "job", "company", "kasnet", "codtech", "work experience"],
+         response: "Aradhya's Work Experience:<br>1. <b>KasNet Technologies (July 2026):</b> Data Analyst Intern — Built interactive Power BI dashboards, DAX measures, and Power Query ETL pipelines.<br>2. <b>Codtech IT Solutions (Jan–Feb 2025):</b> Web Development Intern — Developed full-stack RESTful APIs using MERN Stack, Supabase & automated CI/CD.<br>3. <b>Om Multitherm Engineers:</b> Database Handling & Validation."
+      },
+      {
+         keywords: ["education", "college", "degree", "cgpa", "sppu", "modern college", "pesmcoe", "diploma"],
+         response: "Aradhya's Education:<br>• <b>Bachelor of Engineering (BE IT):</b> PES Modern College of Engineering, Pune (SPPU) — 2023–2026 | <b>CGPA: 7.84 (70.90%)</b><br>• <b>Diploma (IT):</b> Government Polytechnic, Awasari Pune — 2020–2023 | <b>87.19%</b>"
+      },
+      {
+         keywords: ["contact", "email", "phone", "reach", "hire", "linkedin", "github", "address", "pune"],
+         response: "You can contact Aradhya directly via:<br>📧 <b>Email:</b> sonararadhya@gmail.com<br>📞 <b>Phone:</b> +91 82081 36064<br>📍 <b>Location:</b> Pune, Maharashtra, India<br>🔗 <b>LinkedIn:</b> linkedin.com/in/aradhya-sonar<br>💻 <b>GitHub:</b> github.com/sonararadhya"
+      },
+      {
+         keywords: ["who", "aradhya", "about", "bio", "developer"],
+         response: "Aradhya Santosh Sonar is a Full-Stack Software Developer & Data Analyst based in Pune, India. He specializes in React.js, Node.js, Python, AI application workflows, and Power BI analytics."
+      }
+   ];
+
+   // Toggle Chat Window
+   chatbotToggleBtn.addEventListener("click", () => {
+      chatbotContainer.classList.toggle("active");
+      const isActive = chatbotContainer.classList.contains("active");
+      chatbotContainer.setAttribute("aria-hidden", isActive ? "false" : "true");
+   });
+
+   if (closeChatbotBtn) {
+      closeChatbotBtn.addEventListener("click", () => {
+         chatbotContainer.classList.remove("active");
+         chatbotContainer.setAttribute("aria-hidden", "true");
+      });
+   }
+
+   // Mode Tab Switching
+   jsBotTab.addEventListener("click", () => {
+      currentMode = "js";
+      jsBotTab.classList.add("active");
+      groqBotTab.classList.remove("active");
+      groqSettingsBar.style.display = "none";
+      chatStatusText.textContent = "● Mode: Local JS Bot (Instant)";
+      appendBotMessage("Switched to ⚡ <b>Local JS Bot</b> mode. Instant responses from local portfolio knowledge base!");
+   });
+
+   groqBotTab.addEventListener("click", () => {
+      currentMode = "groq";
+      groqBotTab.classList.add("active");
+      jsBotTab.classList.remove("active");
+      groqSettingsBar.style.display = "flex";
+      chatStatusText.textContent = "● Mode: Groq AI (LLaMA 3.1)";
+      appendBotMessage("Switched to 🤖 <b>Groq AI (LLaMA 3.1)</b> mode. Enter a Groq API Key above for live generative answers, or ask questions directly!");
+   });
+
+   // Save Groq API Key
+   if (saveApiKeyBtn && groqApiKeyInput) {
+      saveApiKeyBtn.addEventListener("click", () => {
+         groqApiKey = groqApiKeyInput.value.trim();
+         localStorage.setItem("groq_api_key", groqApiKey);
+         appendBotMessage(groqApiKey ? "✅ Groq API Key saved successfully!" : "⚠️ API Key cleared.");
+      });
+   }
+
+   // Message Helper Functions
+   function appendUserMessage(msg) {
+      const b = document.createElement("div");
+      b.className = "chatBubble userBubble";
+      b.textContent = msg;
+      chatMessages.appendChild(b);
+      scrollToBottom();
+   }
+
+   function appendBotMessage(htmlContent) {
+      const b = document.createElement("div");
+      b.className = "chatBubble botBubble";
+      b.innerHTML = htmlContent;
+      chatMessages.appendChild(b);
+      scrollToBottom();
+   }
+
+   function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+   }
+
+   // Local JS Search Engine
+   function getLocalJsResponse(query) {
+      const lower = query.toLowerCase();
+      let bestMatch = null;
+      let maxScore = 0;
+
+      LOCAL_FAQ_DB.forEach(item => {
+         let score = 0;
+         item.keywords.forEach(kw => {
+            if (lower.includes(kw)) score += 2;
+         });
+         if (score > maxScore) {
+            maxScore = score;
+            bestMatch = item.response;
+         }
+      });
+
+      if (maxScore > 0 && bestMatch) {
+         return bestMatch;
+      }
+
+      return "I can answer questions regarding Aradhya's skills, projects (Chess7Knight, NetChronaix), education, and work experience! Try asking <i>'What are his top skills?'</i> or <i>'Show me projects'</i>.";
+   }
+
+   // Groq AI API Call
+   async function getGroqAiResponse(query) {
+      const systemPrompt = `You are "Aradhya AI", an intelligent assistant representing Aradhya Santosh Sonar on his portfolio website.
+Aradhya's Profile:
+- Role: Full-Stack Developer & Data Analyst based in Pune, India.
+- Key Projects: Chess7Knight (https://chess7knight.vercel.app/), NetChronaix (https://netchronaix.vercel.app/), Reunite AI, MedAI Suite.
+- Tech Stack: React.js, Node.js, Express, MongoDB Atlas, Supabase, Python, Power BI, DAX, Power Query, Microsoft Fabric, AWS, C++.
+- Education: BE IT at PES Modern College of Engineering Pune (SPPU) - CGPA 7.84 (70.90%). Diploma IT (87.19%).
+- Work: KasNet Technologies (Data Analyst Intern), Codtech IT Solutions (Web Dev Intern).
+- Contact: sonararadhya@gmail.com, +91 82081 36064.
+Answer politely, professionally, concisely, and highlight Aradhya's achievements.`;
+
+      if (!groqApiKey) {
+         return "⚠️ <b>Groq API Key missing.</b> Enter a free Groq API key in the settings bar above (from <a href='https://console.groq.com' target='_blank'>console.groq.com</a>) or switch back to ⚡ <b>Local JS Bot</b> mode for instant answers!<br><br><b>Fallback Answer:</b><br>" + getLocalJsResponse(query);
+      }
+
+      try {
+         const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+               "Authorization": `Bearer ${groqApiKey}`,
+               "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+               model: "llama-3.1-8b-instant",
+               messages: [
+                  { role: "system", content: systemPrompt },
+                  { role: "user", content: query }
+               ],
+               temperature: 0.7,
+               max_tokens: 300
+            })
+         });
+
+         const data = await res.json();
+         if (data.choices && data.choices[0] && data.choices[0].message) {
+            return data.choices[0].message.content.replace(/\n/g, "<br>");
+         } else if (data.error) {
+            return `⚠️ <b>Groq API Error:</b> ${data.error.message || "Invalid API Key or rate limit."}`;
+         }
+      } catch (err) {
+         console.error("Groq API error:", err);
+         return "⚠️ Failed to reach Groq API. Falling back to local search:<br><br>" + getLocalJsResponse(query);
+      }
+      return getLocalJsResponse(query);
+   }
+
+   // Handle Form Submission
+   chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      appendUserMessage(text);
+      chatInput.value = "";
+
+      if (currentMode === "js") {
+         const reply = getLocalJsResponse(text);
+         setTimeout(() => appendBotMessage(reply), 150);
+      } else {
+         const loadingBubble = document.createElement("div");
+         loadingBubble.className = "chatBubble botBubble";
+         loadingBubble.innerHTML = "🤖 <i>Groq LLaMA 3.1 thinking...</i>";
+         chatMessages.appendChild(loadingBubble);
+         scrollToBottom();
+
+         const reply = await getGroqAiResponse(text);
+         loadingBubble.remove();
+         appendBotMessage(reply);
+      }
+   });
+
+   // Handle Suggestion Chips
+   document.querySelectorAll(".chipBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+         const query = btn.getAttribute("data-query") || btn.textContent;
+         chatInput.value = query;
+         chatForm.dispatchEvent(new Event("submit"));
+      });
+   });
+});

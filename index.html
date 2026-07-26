@@ -1124,6 +1124,65 @@
     </div>
   </div>
 
+  <!-- DUAL-MODE AI CHATBOT WIDGET -->
+  <button id="chatbotToggleBtn" class="chatbotToggleBtn" aria-label="Open Chatbot Assistant">
+    <i class="ri-robot-line"></i>
+    <span class="chatBadge">AI</span>
+  </button>
+
+  <div id="chatbotContainer" class="chatbotContainer" aria-hidden="true">
+    <div class="chatHeader">
+      <div class="chatHeaderTitle">
+        <i class="ri-robot-line"></i>
+        <div>
+          <h4>Aradhya's AI Assistant</h4>
+          <span class="chatStatus" id="chatStatusText">● Mode: Local JS Bot (Instant)</span>
+        </div>
+      </div>
+      <button id="closeChatbotBtn" class="chatHeaderClose" aria-label="Close Chatbot">&times;</button>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <div class="chatModeTabs">
+      <button id="jsBotTab" class="chatTabBtn active" data-mode="js">
+        <i class="ri-flashlight-line"></i> ⚡ Local JS Bot
+      </button>
+      <button id="groqBotTab" class="chatTabBtn" data-mode="groq">
+        <i class="ri-cpu-line"></i> 🤖 Groq AI (LLaMA 3.1)
+      </button>
+    </div>
+
+    <!-- Groq API Key Input Bar -->
+    <div id="groqSettingsBar" class="groqSettingsBar" style="display: none;">
+      <input type="password" id="groqApiKeyInput" placeholder="Paste Groq API Key (gsk_...)" />
+      <button type="button" id="saveApiKeyBtn"><i class="ri-save-line"></i> Save</button>
+      <small>Get free key at <a href="https://console.groq.com" target="_blank" style="color:#a855f7;">console.groq.com</a></small>
+    </div>
+
+    <!-- Chat Messages Scroll Area -->
+    <div id="chatMessages" class="chatMessages">
+      <div class="chatBubble botBubble">
+        Hi! 👋 I'm Aradhya's Portfolio AI Assistant. Toggle between <b>⚡ Local JS Bot</b> or <b>🤖 Groq AI</b> and ask me anything about his skills, experience, or projects!
+      </div>
+    </div>
+
+    <!-- Quick Suggestion Chips -->
+    <div class="chatSuggestions">
+      <button type="button" class="chipBtn" data-query="Tell me about your key projects">🚀 Key Projects</button>
+      <button type="button" class="chipBtn" data-query="What is your full tech stack?">💻 Tech Stack</button>
+      <button type="button" class="chipBtn" data-query="What is your education background?">🎓 Education</button>
+      <button type="button" class="chipBtn" data-query="What is your work experience?">💼 Work Experience</button>
+    </div>
+
+    <!-- Chat Input Area -->
+    <form id="chatForm" class="chatInputForm">
+      <input type="text" id="chatInput" placeholder="Ask about Aradhya's work..." required autocomplete="off" />
+      <button type="submit" id="sendChatBtn" aria-label="Send Message">
+        <i class="ri-send-plane-fill"></i>
+      </button>
+    </form>
+  </div>
+
   <!-- Main Script -->
   <script defer src="script.min.js"></script>
 </body>
