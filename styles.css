@@ -1537,7 +1537,7 @@ body {
 /* =====================
    CURSOR & LOADER & SKILLS 3D
 ===================== */
-body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn { 
+body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn, .certModal, .certModalContent, .certModalHeader, .certModalBody, .certModalControls button, .certModalControls a { 
    cursor: none !important; 
 }
 
@@ -1548,7 +1548,7 @@ body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn {
    background: var(--accent);
    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
    pointer-events: none;
-   z-index: 9999;
+   z-index: 999999;
    transform: translate(-50%, -50%);
    transition: width 0.3s, height 0.3s, opacity 0.3s;
 }
@@ -1560,7 +1560,7 @@ body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn {
    border: 1px solid var(--accent);
    border-radius: 50%;
    pointer-events: none;
-   z-index: 9998;
+   z-index: 999998;
    transform: translate(-50%, -50%);
    transition: left 0.5s ease, top 0.5s ease, width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s, border-radius 0.3s, transform 0.3s, backdrop-filter 0.3s;
 }
@@ -1699,7 +1699,7 @@ body, a, button, .card, .projectCard, .flipScene, .resumeBtn, .socialBtn {
    background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(168, 85, 247, 0) 70%);
    border-radius: 50%;
    pointer-events: none;
-   z-index: 9997;
+   z-index: 999997;
    mix-blend-mode: screen;
    transform: translate(-50%, -50%);
    transition: left 1.2s ease-out, top 1.2s ease-out;
