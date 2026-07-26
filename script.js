@@ -113,15 +113,24 @@ const btn = document.getElementById("topBtn");
 btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
 /* =====================
-   THEME TOGGLE
+   THEME TOGGLE WITH LOCALSTORAGE PERSISTENCE
 ===================== */
 const toggle = document.getElementById("themeToggle");
-toggle.onclick = () => {
-   document.body.classList.toggle("light");
-   toggle.innerHTML = document.body.classList.contains("light")
-      ? '<i class="ri-moon-line"></i>'
-      : '<i class="ri-sun-line"></i>';
-};
+if (toggle) {
+   const savedTheme = localStorage.getItem("theme");
+   if (savedTheme === "light") {
+      document.body.classList.add("light");
+      toggle.innerHTML = '<i class="ri-moon-line"></i>';
+   }
+   toggle.onclick = () => {
+      document.body.classList.toggle("light");
+      const isLight = document.body.classList.contains("light");
+      localStorage.setItem("theme", isLight ? "light" : "dark");
+      toggle.innerHTML = isLight
+         ? '<i class="ri-moon-line"></i>'
+         : '<i class="ri-sun-line"></i>';
+   };
+}
 
 /* =====================
    MOBILE MENU TOGGLE
@@ -137,8 +146,11 @@ if(menuBtn && navLinksContainer) {
       navLinksContainer.classList.toggle("active");
       if(menuOverlay) menuOverlay.classList.toggle("active");
       
+      const isActive = navLinksContainer.classList.contains("active");
+      menuBtn.setAttribute("aria-expanded", isActive ? "true" : "false");
+      
       const icon = menuBtn.querySelector("i");
-      if(navLinksContainer.classList.contains("active")) {
+      if(isActive) {
          icon.classList.remove("ri-menu-3-line");
          icon.classList.add("ri-close-line");
       } else {
@@ -665,10 +677,20 @@ async function sendVisitorData() {
    try {
       let country = "Unknown";
       try {
-         const geo = await fetch("https://ipapi.co/json/").then(res => res.json());
-         country = geo.country_name;
-      } catch (e) {
-         console.log("Geo failed");
+         const geo = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) }).then(res => res.json());
+         country = geo.country_name || "Unknown";
+      } catch (e1) {
+         try {
+            const geo2 = await fetch("https://ip-api.com/json/", { signal: AbortSignal.timeout(3000) }).then(res => res.json());
+            country = geo2.country || "Unknown";
+         } catch (e2) {
+            try {
+               const geo3 = await fetch("https://api.country.is/", { signal: AbortSignal.timeout(3000) }).then(res => res.json());
+               country = geo3.country || "Unknown";
+            } catch (e3) {
+               country = "Unknown";
+            }
+         }
       }
       const res = await fetch(`${SUPABASE_URL}/rest/v1/visitors`, {
          method: "POST",
@@ -794,36 +816,28 @@ loadProjects();
 
 
 /* =====================
-   UNIVERSAL TEXT HOVER REACT
+   OPTIMIZED TEXT HOVER EFFECT
 ===================== */
 document.addEventListener("DOMContentLoaded", () => {
    if (isMobile) return;
-   const texts = document.querySelectorAll('h1, h2, h3, p, li, span');
+   const texts = document.querySelectorAll('h1, h2.sectionTitle, .heroSubtitle');
    texts.forEach(el => {
-      // Don't apply to icons, buttons, or extremely large containers
-      if(el.closest('button') || el.closest('a') || el.classList.contains('devicon') || el.classList.contains('ri')) return;
-      if(el.children.length > 1) return; // Only process leaf elements mostly
-      
+      if (el.closest('button') || el.closest('a')) return;
       el.classList.add('text-react');
-      
       let rect, isInside;
-      el.addEventListener('mouseenter', (e) => {
+      el.addEventListener('mouseenter', () => {
          isInside = true;
          rect = el.getBoundingClientRect();
       });
       el.addEventListener('mousemove', (e) => {
-         if(!isInside) return;
+         if (!isInside || !rect) return;
          const x = e.clientX - rect.left - rect.width / 2;
          const y = e.clientY - rect.top - rect.height / 2;
-         
-         // Subtle shift & tiny scale
-         el.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px) scale(1.02)`;
-         el.style.textShadow = `${-x * 0.15}px ${-y * 0.15}px 10px var(--cursor-glow)`;
+         el.style.transform = `translate(${x * 0.05}px, ${y * 0.05}px) scale(1.01)`;
       });
       el.addEventListener('mouseleave', () => {
          isInside = false;
          el.style.transform = 'translate(0px, 0px) scale(1)';
-         el.style.textShadow = 'none';
       });
    });
 });

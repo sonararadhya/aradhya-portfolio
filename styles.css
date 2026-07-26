@@ -1348,12 +1348,14 @@ body {
       z-index: 998;
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
       transition: 0.4s ease;
    }
 
    .menuOverlay.active {
       opacity: 1;
       visibility: visible;
+      pointer-events: auto;
    }
 
    .navLinks {
