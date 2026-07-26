@@ -1208,9 +1208,9 @@ document.addEventListener("DOMContentLoaded", () => {
    function getLocalJsResponse(query) {
       const lower = query.toLowerCase().trim();
 
-      // Guardrail against general coding/program generation requests
-      if (lower.includes("add 2") || lower.includes("write code") || lower.includes("write a program") || lower.includes("code for") || lower.includes("write python") || lower.includes("solve")) {
-         return "I am Aradhya's Portfolio Assistant! My purpose is to answer questions about Aradhya's skills, projects (Chess7Knight, NetChronaix), education, and work experience. Feel free to ask about his technical expertise!";
+      const OFF_TOPIC = ["fibonacci", "add 2", "add two", "write code", "write a program", "code for", "write python", "solve", "essay", "poem", "joke", "hack", "script for"];
+      if (OFF_TOPIC.some(term => lower.includes(term))) {
+         return "I am Aradhya's Portfolio AI Assistant! My purpose is strictly to answer questions about Aradhya's skills, projects (Chess7Knight, NetChronaix), education, work experience, and hiring inquiries.";
       }
 
       let bestMatch = null;

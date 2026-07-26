@@ -1,14 +1,13 @@
 // Vercel Serverless Function: /api/chat
-// Securely proxies chatbot queries to Groq LLaMA 3.1 with automatic API Key Failover
+// Securely proxies chatbot queries to Groq LLaMA 3.1 with automatic API Key Failover and Zero-Token Guardrails
 
 const SYSTEM_PROMPT = `You are "Aradhya AI", an intelligent, professional, and truthful AI assistant representing Aradhya Santosh Sonar on his personal portfolio website.
 
-STRICT SCOPE GUARDRAILS (PREVENT TOKEN EXHAUSTION & MISUSE):
-1. YOU ARE EXCLUSIVELY A PORTFOLIO ASSISTANT FOR ARADHYA SANTOSH SONAR.
-2. DO NOT WRITE GENERAL CODE SNIPPETS, SCRIPTS, HOMEWORK SOLUTIONS, ESSAYS, OR GENERAL CODING TUTORIALS FOR VISITORS (e.g., "Write python code to add 2 numbers", "Write a C++ sorting algorithm", "Write an essay").
-3. IF A USER ASKS A GENERAL CODING, MATH, OR NON-PORTFOLIO QUESTION:
-   Politely decline and state:
-   "I am Aradhya's Portfolio Assistant! My purpose is to answer questions about Aradhya's skills, projects (Chess7Knight, NetChronaix), education, and work experience. Feel free to ask about his technical expertise or hire him!"
+IRONCLAD SAFETY & ZERO-LEAKAGE DIRECTIVES:
+1. YOU ARE STRICTLY PROHIBITED FROM GENERATING ANY GENERAL CODE SNIPPETS, PROGRAMMING EXAMPLES, TUTORIALS, OR SOLVING GENERAL PROBLEMS FOR VISITORS (e.g. "write code for fibonacci", "add 2 numbers", "solve math", "write essay", "write script").
+2. DO NOT OFFER "HOWEVER..." OR "I CAN PROVIDE CODE..." EXAMPLES UNDER ANY CIRCUMSTANCES.
+3. IF A QUESTION IS NOT SPECIFICALLY ABOUT ARADHYA SANTOSH SONAR OR HIS PORTFOLIO, YOU MUST RESPOND ONLY WITH THIS EXACT TEXT:
+"I am Aradhya's Portfolio AI Assistant! My purpose is strictly to answer questions about Aradhya's skills, projects (Chess7Knight, NetChronaix), education, work experience, and hiring inquiries."
 
 CRITICAL TRUTHFULNESS & ACCURACY RULES:
 1. NEVER hallucinate or exaggerate Aradhya's project tech stacks or experience.
@@ -68,6 +67,14 @@ INSTRUCTIONS FOR BOT RESPONSES:
 - Format responses cleanly with bolding and bullet points.
 `;
 
+// Off-topic / Abuse Pre-Filter Patterns (Zero-Token Guardrail)
+const OFF_TOPIC_PATTERNS = [
+  "fibonacci", "add 2", "add two", "write code", "write a code", "write a program",
+  "python code", "cpp code", "java code", "script for", "solve", "calculator",
+  "bubble sort", "binary search", "leetcode", "write an essay", "write a poem",
+  "tell a joke", "recipe for", "how to hack", "exploit", "game code", "homework"
+];
+
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -90,6 +97,16 @@ export default async function handler(req, res) {
     const { message, history } = req.body || {};
     if (!message) {
       return res.status(400).json({ error: "Message is required." });
+    }
+
+    const lowerMessage = message.toLowerCase().trim();
+
+    // ZERO-TOKEN PRE-FILTER: Instantly block non-portfolio requests without calling the LLM
+    const isOffTopic = OFF_TOPIC_PATTERNS.some(pattern => lowerMessage.includes(pattern));
+    if (isOffTopic) {
+      return res.status(200).json({
+        reply: "I am Aradhya's Portfolio AI Assistant! My purpose is strictly to answer questions about Aradhya's skills, projects (Chess7Knight, NetChronaix), education, work experience, and hiring inquiries."
+      });
     }
 
     const apiKeys = [
@@ -124,8 +141,8 @@ export default async function handler(req, res) {
           body: JSON.stringify({
             model: "llama-3.1-8b-instant",
             messages: messages,
-            temperature: 0.2, // Very low temperature to prevent off-topic responses
-            max_tokens: 300   // Limit max tokens per response to save quota
+            temperature: 0.1, // Near zero temperature for strict compliance
+            max_tokens: 250
           })
         });
 
