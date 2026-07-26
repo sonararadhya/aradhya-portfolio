@@ -770,72 +770,20 @@ async function getBrowser() {
 const githubUser = "sonararadhya";
 const projectsGrid = document.getElementById("projectsGrid");
 
-const featuredProjects = [
-   {
-      name: "Chess7Knight",
-      description: "Full-Stack interactive online chess application featuring custom board themes, 20+ puzzles, post-game reviews, and real-time ELO progression.",
-      tech: "MERN Stack · Socket.io · React.js · Tailwind CSS",
-      vercelUrl: "https://chess7knight.vercel.app/",
-      githubUrl: "https://github.com/sonararadhya/Chess7Knight",
-      image: "https://opengraph.githubassets.com/1/sonararadhya/Chess7Knight"
-   },
-   {
-      name: "NetChronaix",
-      description: "Real-time network telemetry and analysis platform for traffic monitoring, CORS debugging, and microservice latency optimization.",
-      tech: "React.js · Node.js · Express · RESTful APIs",
-      vercelUrl: "https://netchronaix.vercel.app/",
-      githubUrl: "https://github.com/sonararadhya/netchronaix",
-      image: "https://opengraph.githubassets.com/1/sonararadhya/netchronaix"
-   }
-];
-
 async function loadProjects() {
    if (!projectsGrid) return;
    try {
       projectsGrid.innerHTML = '';
 
-      // Render Featured Vercel Deployed Projects
-      featuredProjects.forEach(proj => {
-         const card = document.createElement("div");
-         card.className = "projectCard featuredProjectCard";
-         card.innerHTML = `
-            <div class="vercelBadge"><span class="pulseDot"></span> Live on Vercel</div>
-            <img class="projectImage" src="${proj.image}" onerror="this.src='Images/profile.webp'" alt="${proj.name}" loading="lazy">
-            <h3>${proj.name}</h3>
-            <p>${proj.description}</p>
-            <div class="tech">${proj.tech}</div>
-            <div class="projectBtns">
-               <a href="${proj.vercelUrl}" target="_blank" class="projectBtn liveBtn" onclick="event.stopPropagation()">
-                  <i class="ri-external-link-line"></i> Live App
-               </a>
-               <a href="${proj.githubUrl}" target="_blank" class="projectBtn gitBtn" onclick="event.stopPropagation()">
-                  <i class="ri-github-fill"></i> GitHub
-               </a>
-            </div>
-         `;
-         card.onclick = () => window.open(proj.vercelUrl, "_blank");
-         projectsGrid.appendChild(card);
-
-         if (typeof gsap !== 'undefined') {
-            gsap.fromTo(card,
-               { opacity: 0, y: 50, scale: 0.95, rotationX: 10 },
-               { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 0.8, ease: "power3.out",
-                 scrollTrigger: { trigger: card, start: "top 85%", once: true } 
-               }
-            );
-         }
-         card.classList.add("show");
-      });
-
-      // Fetch remaining GitHub Repos
+      // Fetch GitHub Repos
       const res = await fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated`);
       const repos = await res.json();
 
       if (Array.isArray(repos)) {
          repos
-            .filter(repo => !repo.fork && !['sonararadhya', 'Laptop-settings', 'Chess7Knight', 'netchronaix'].includes(repo.name))
+            .filter(repo => !repo.fork && !['sonararadhya', 'Laptop-settings'].includes(repo.name))
             .sort((a, b) => b.stargazers_count - a.stargazers_count)
-            .slice(0, 6)
+            .slice(0, 8)
             .forEach(repo => {
                const card = document.createElement("div");
                card.className = "projectCard";
