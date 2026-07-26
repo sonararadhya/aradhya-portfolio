@@ -1038,6 +1038,27 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <!-- Vanilla Tilt -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <!-- CERTIFICATE LIGHTBOX MODAL -->
+  <div id="certModal" class="certModal" aria-hidden="true" role="dialog">
+    <div class="certModalBackdrop" id="certModalBackdrop"></div>
+    <div class="certModalContent">
+      <div class="certModalHeader">
+        <h3 id="certModalTitle">Certificate Preview</h3>
+        <div class="certModalControls">
+          <button id="certZoomInBtn" title="Zoom In"><i class="ri-zoom-in-line"></i></button>
+          <button id="certZoomOutBtn" title="Zoom Out"><i class="ri-zoom-out-line"></i></button>
+          <button id="certResetZoomBtn" title="Reset Zoom"><i class="ri-refresh-line"></i></button>
+          <a id="certDownloadBtn" href="#" target="_blank" download title="Download"><i class="ri-download-2-line"></i></a>
+          <button id="certCloseBtn" title="Close"><i class="ri-close-line"></i></button>
+        </div>
+      </div>
+      <div class="certModalBody" id="certModalBody">
+        <img id="certModalImg" src="" alt="Certificate Preview" style="display:none;">
+        <iframe id="certModalIframe" src="" style="display:none;" title="Certificate PDF"></iframe>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Script -->
   <script defer src="script.min.js"></script>
 </body>
