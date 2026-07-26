@@ -1106,8 +1106,8 @@ document.addEventListener("DOMContentLoaded", () => {
          response: "📊 <b>Aradhya's Power BI & Data Analytics Experience:</b><br>• <b>Role:</b> Data Analyst Intern at KasNet Technologies Pvt. Ltd.<br>• <b>Key Achievements:</b><br> 1. Designed interactive executive dashboards analyzing complex business metrics.<br> 2. Authored custom <b>DAX measures</b> & optimized <b>Power Query ETL</b> pipelines.<br> 3. Reduced data preprocessing time by 30% through automated data models.<br> 4. Hands-on experience with <b>Microsoft Fabric</b> and SQL database integrations.<br>• <b>Certifications:</b> PL-900, DP-900, and Power BI Internship Certificate."
       },
       {
-         keywords: ["r", "r programming", "r language", "statistics", "statistical"],
-         response: "📈 <b>R Programming & Statistics Knowledge:</b><br>Aradhya has foundational academic knowledge of R programming for statistical data analysis and data visualization (ggplot2, dplyr). His primary production projects are built using Python (OpenCV, PyTorch) and JavaScript/React."
+         keywords: ["rust", "rust language", "rust certificate"],
+         response: "🦀 <b>Rust & Core Languages:</b><br>• Aradhya holds a <b>Rust Certification</b>.<br>• Core Programming Languages: Python, JavaScript, TypeScript, C++, Java, Rust, SQL."
       },
       {
          keywords: ["python", "reunite ai", "medai", "opencv", "insightface", "machine learning", "ml", "ai"],
@@ -1130,20 +1130,36 @@ document.addEventListener("DOMContentLoaded", () => {
          response: "💼 <b>Aradhya's Work Experience:</b><br>1. <b>KasNet Technologies:</b> Data Analyst Intern — Power BI dashboards, DAX, Power Query ETL pipelines.<br>2. <b>Codtech IT Solutions:</b> Web Development Intern — RESTful APIs, MERN Stack, Supabase backend & CI/CD.<br>3. <b>Om Multitherm Engineers:</b> Database validation & system administration."
       },
       {
-         keywords: ["education", "college", "degree", "cgpa", "sppu", "modern college", "pesmcoe", "diploma", "awasari"],
-         response: "🎓 <b>Aradhya's Education:</b><br>• <b>B.E. in Information Technology:</b> PES Modern College of Engineering, Pune (SPPU) | <b>CGPA: 7.84 (70.90%)</b><br>• <b>Diploma in IT:</b> Government Polytechnic, Awasari Pune | <b>87.19%</b>"
+         keywords: ["education", "college", "degree", "cgpa", "percentage", "marks", "gpa", "grade", "scores", "sppu", "modern college", "pesmcoe", "diploma", "awasari"],
+         response: "🎓 <b>Aradhya's Academic Credentials & Scores:</b><br>• <b>B.E. in Information Technology:</b> PES Modern College of Engineering, Pune (SPPU) | <b>CGPA: 7.84 / 10 (70.90%)</b><br>• <b>Diploma in IT:</b> Government Polytechnic, Awasari Pune | <b>87.19% Aggregate</b>"
       },
       {
-         keywords: ["skill", "skills", "tech", "stack", "react", "mern", "node", "express", "sql", "c++", "javascript", "frontend", "backend"],
-         response: "💻 <b>Aradhya's Core Tech Stack:</b><br>• <b>Languages:</b> Python, JavaScript, TypeScript, C++, Java, SQL<br>• <b>Frontend:</b> React.js, Next.js, HTML5, CSS3, Tailwind CSS<br>• <b>Backend:</b> Node.js, Express.js, FastAPI, REST APIs<br>• <b>Data & Analytics:</b> Power BI, DAX, Power Query, Microsoft Fabric, OpenCV, Scikit-Learn<br>• <b>Databases & Cloud:</b> Supabase, MongoDB, AWS, Azure, Git."
+         keywords: ["skill", "skills", "tech", "stack", "react", "mern", "node", "express", "sql", "c++", "rust", "javascript", "frontend", "backend"],
+         response: "💻 <b>Aradhya's Core Tech Stack:</b><br>• <b>Languages:</b> Python, JavaScript, TypeScript, C++, Java, Rust, SQL<br>• <b>Frontend:</b> React.js, Next.js, HTML5, CSS3, Tailwind CSS<br>• <b>Backend:</b> Node.js, Express.js, FastAPI, REST APIs<br>• <b>Data & Analytics:</b> Power BI, DAX, Power Query, Microsoft Fabric, OpenCV, Scikit-Learn<br>• <b>Databases & Cloud:</b> Supabase, MongoDB, AWS, Azure, Git."
+      },
+      {
+         keywords: ["docker", "container", "devops", "git", "github actions", "ci/cd", "pipeline"],
+         response: "🐳 <b>Docker & DevOps Capabilities:</b><br>• Experienced in containerizing applications with <b>Docker</b>.<br>• Automated CI/CD deployment pipelines using <b>GitHub Actions</b>.<br>• Version control using <b>Git/GitHub</b> and serverless hosting on Vercel & AWS."
+      },
+      {
+         keywords: ["spoken languages", "languages you speak", "speak", "english", "hindi", "marathi", "gujarati", "japanese", "mother tongue"],
+         response: "🗣️ <b>Spoken Languages & Proficiency:</b><br>• <b>English:</b> Fluent (Professional)<br>• <b>Hindi:</b> Native / Bilingual<br>• <b>Marathi:</b> Native / Bilingual<br>• <b>Gujarati:</b> Native / Bilingual<br>• <b>Japanese:</b> Beginner (Elementary Learning)"
+      },
+      {
+         keywords: ["linux", "cyber", "cyber forensics", "forensics", "crime analyst", "security", "shell"],
+         response: "🐧 <b>Linux & Cybersecurity Credentials:</b><br>• Certified in <b>Linux System Administration & Shell Scripting</b>.<br>• Certified <b>Cyber Crime Analyst & Cyber Forensics Investigator</b> (Cyber Sanskar Workshop)."
+      },
+      {
+         keywords: ["intel", "intel ai", "badges", "digital badges", "ai aware", "ai appreciate"],
+         response: "🏅 <b>Intel AI Badges & Micro-Credentials:</b><br>• <b>Intel AI Appreciate</b> Digital Badge<br>• <b>Intel AI Aware</b> Digital Badge<br>• IBM Certified: Getting Started with Artificial Intelligence."
       },
       {
          keywords: ["certificate", "certifications", "certified", "ibm"],
-         response: "📜 <b>Certifications & Credentials:</b><br>• Microsoft Certified: Azure AI Fundamentals (AI-900)<br>• Microsoft Certified: Azure Fundamentals (AZ-900)<br>• Microsoft Certified: Azure Data Fundamentals (DP-900)<br>• Microsoft Certified: Power Platform Fundamentals (PL-900)<br>• IBM Artificial Intelligence & Power BI Internship Certifications."
+         response: "📜 <b>Full List of Certifications & Credentials:</b><br>• <b>Core Microsoft:</b> Azure AI-900, AZ-900, DP-900, PL-900<br>• <b>AI Badges:</b> Intel AI Appreciate, Intel AI Aware, IBM AI Certified<br>• <b>Web & Backend:</b> HackerRank JavaScript, ReactJS, NodeJS Bootcamp, Full-Stack, PHP & MySQL<br>• <b>Systems & Security:</b> Linux Administration, Cyber Crime Analyst & Cyber Forensics Investigator<br>• <b>Languages:</b> Rust Certified, C & C++ Advanced, Python & Flask<br>• <b>Internships:</b> KasNet Power BI Data Analyst & Codtech Web Development."
       },
       {
-         keywords: ["contact", "email", "phone", "reach", "hire", "linkedin", "github", "address", "pune", "resume"],
-         response: "📬 <b>Contact Aradhya:</b><br>📧 <b>Email:</b> sonararadhya@gmail.com<br>📞 <b>Phone:</b> +91 82081 36064<br>📍 <b>Location:</b> Pune, Maharashtra, India<br>🔗 <b>LinkedIn:</b> linkedin.com/in/aradhya-sonar<br>💻 <b>GitHub:</b> github.com/sonararadhya"
+         keywords: ["contact", "email", "phone", "reach", "hire", "linkedin", "github", "address", "pune", "resume", "location", "city", "where", "place", "maharashtra", "india"],
+         response: "📬 <b>Contact & Location details for Aradhya:</b><br>📍 <b>Location:</b> Pune, Maharashtra, India<br>📧 <b>Email:</b> sonararadhya@gmail.com<br>📞 <b>Phone:</b> +91 82081 36064<br>🔗 <b>LinkedIn:</b> linkedin.com/in/aradhya-sonar<br>💻 <b>GitHub:</b> github.com/sonararadhya"
       },
       {
          keywords: ["who", "aradhya", "about", "bio", "developer"],
@@ -1233,7 +1249,7 @@ document.addEventListener("DOMContentLoaded", () => {
          return bestMatch;
       }
 
-      return "I can answer questions regarding Aradhya's Power BI experience, projects (Chess7Knight, NetChronaix), education, and work experience! Try asking <i>'Tell me about your Power BI experience'</i> or <i>'Show me projects'</i>.";
+      return "I am Aradhya's Portfolio Assistant! Ask me anything about Aradhya's skills, projects (Chess7Knight, NetChronaix), education, work experience, location, or contact details.";
    }
 
    let chatHistory = [];
