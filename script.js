@@ -1103,28 +1103,44 @@ document.addEventListener("DOMContentLoaded", () => {
    // Portfolio Local Knowledge Base
    const LOCAL_FAQ_DB = [
       {
-         keywords: ["project", "projects", "work", "built", "apps", "chess7knight", "netchronaix", "portfolio"],
-         response: "Aradhya's top projects include:<br>• <b>Chess7Knight:</b> Live MERN Stack online chess app with custom themes & ELO system (chess7knight.vercel.app)<br>• <b>NetChronaix:</b> Real-time network telemetry & analysis platform (netchronaix.vercel.app)<br>• <b>Reunite AI:</b> Facial recognition pipeline using OpenCV & InsightFace<br>• <b>MedAI Suite:</b> Diagnostic ML platform."
+         keywords: ["power bi", "dax", "power query", "fabric", "kasnet", "data analyst", "data analytics", "dashboard"],
+         response: "📊 <b>Aradhya's Power BI & Data Analytics Experience:</b><br>• <b>Role:</b> Data Analyst Intern at KasNet Technologies Pvt. Ltd.<br>• <b>Key Achievements:</b><br> 1. Designed interactive executive dashboards analyzing complex business metrics.<br> 2. Authored custom <b>DAX measures</b> & optimized <b>Power Query ETL</b> pipelines.<br> 3. Reduced data preprocessing time by 30% through automated data models.<br> 4. Hands-on experience with <b>Microsoft Fabric</b> and SQL database integrations.<br>• <b>Certifications:</b> PL-900, DP-900, and Power BI Internship Certificate."
       },
       {
-         keywords: ["skill", "skills", "tech", "stack", "react", "python", "power bi", "dax", "javascript", "node", "express", "sql"],
-         response: "Aradhya's core skill set covers:<br>• <b>Languages:</b> Python, JavaScript, TypeScript, C++, Java, R, SQL<br>• <b>Frontend:</b> React.js, Next.js, HTML5, CSS3, Tailwind CSS<br>• <b>Backend:</b> Node.js, Express.js, FastAPI, Django, REST APIs<br>• <b>Data & AI:</b> Power BI, DAX, Power Query, Microsoft Fabric, OpenCV, Scikit-Learn<br>• <b>Cloud & Infra:</b> AWS, Azure, Supabase, MongoDB, Git, Docker."
+         keywords: ["chess7knight", "chess", "mcts", "elo", "board"],
+         response: "♟️ <b>Chess7Knight Project:</b><br>• Full-Stack interactive MERN chess app deployed at <a href='https://chess7knight.vercel.app/' target='_blank'>chess7knight.vercel.app</a>.<br>• Features custom board textures, 20+ puzzles, stockfish-assisted post-game review, and real-time ELO progression system."
       },
       {
-         keywords: ["experience", "internship", "job", "company", "kasnet", "codtech", "work experience"],
-         response: "Aradhya's Work Experience:<br>1. <b>KasNet Technologies (July 2026):</b> Data Analyst Intern — Built interactive Power BI dashboards, DAX measures, and Power Query ETL pipelines.<br>2. <b>Codtech IT Solutions (Jan–Feb 2025):</b> Web Development Intern — Developed full-stack RESTful APIs using MERN Stack, Supabase & automated CI/CD.<br>3. <b>Om Multitherm Engineers:</b> Database Handling & Validation."
+         keywords: ["netchronaix", "network", "telemetry", "traffic", "cors"],
+         response: "🌐 <b>NetChronaix Platform:</b><br>• Real-time network telemetry platform deployed at <a href='https://netchronaix.vercel.app/' target='_blank'>netchronaix.vercel.app</a>.<br>• Used for microservice latency optimization, CORS debugging, and real-time packet telemetry."
+      },
+      {
+         keywords: ["project", "projects", "work", "built", "apps", "portfolio"],
+         response: "🚀 <b>Aradhya's Featured Projects:</b><br>1. <b>Chess7Knight:</b> MERN chess platform with custom themes & ELO tracking (chess7knight.vercel.app)<br>2. <b>NetChronaix:</b> Real-time network telemetry platform (netchronaix.vercel.app)<br>3. <b>Reunite AI:</b> Facial recognition pipeline built with OpenCV & InsightFace<br>4. <b>MedAI Suite:</b> Diagnostic medical machine learning suite."
+      },
+      {
+         keywords: ["experience", "internship", "job", "company", "work experience", "codtech"],
+         response: "💼 <b>Aradhya's Work Experience:</b><br>1. <b>KasNet Technologies:</b> Data Analyst Intern — Power BI dashboards, DAX, Power Query ETL pipelines.<br>2. <b>Codtech IT Solutions:</b> Web Development Intern — RESTful APIs, MERN Stack, Supabase backend & CI/CD.<br>3. <b>Om Multitherm Engineers:</b> Database validation & system administration."
       },
       {
          keywords: ["education", "college", "degree", "cgpa", "sppu", "modern college", "pesmcoe", "diploma"],
-         response: "Aradhya's Education:<br>• <b>Bachelor of Engineering (BE IT):</b> PES Modern College of Engineering, Pune (SPPU) — 2023–2026 | <b>CGPA: 7.84 (70.90%)</b><br>• <b>Diploma (IT):</b> Government Polytechnic, Awasari Pune — 2020–2023 | <b>87.19%</b>"
+         response: "🎓 <b>Aradhya's Education:</b><br>• <b>B.E. in Information Technology:</b> PES Modern College of Engineering, Pune (SPPU) | <b>CGPA: 7.84 (70.90%)</b><br>• <b>Diploma in IT:</b> Government Polytechnic, Awasari Pune | <b>87.19%</b>"
+      },
+      {
+         keywords: ["skill", "skills", "tech", "stack", "react", "python", "javascript", "node", "express", "sql"],
+         response: "💻 <b>Aradhya's Core Tech Stack:</b><br>• <b>Languages:</b> Python, JavaScript, TypeScript, C++, Java, SQL<br>• <b>Frontend:</b> React.js, Next.js, HTML5, CSS3, Tailwind CSS<br>• <b>Backend:</b> Node.js, Express.js, FastAPI, REST APIs<br>• <b>Data & Analytics:</b> Power BI, DAX, Power Query, Microsoft Fabric, OpenCV, Scikit-Learn<br>• <b>Databases & Cloud:</b> Supabase, MongoDB, AWS, Git."
+      },
+      {
+         keywords: ["certificate", "certifications", "certified", "microsoft", "az-900", "ai-900", "dp-900", "pl-900"],
+         response: "📜 <b>Certifications & Credentials:</b><br>• Microsoft AI-900 (Azure AI Fundamentals)<br>• Microsoft AZ-900 (Azure Fundamentals)<br>• Microsoft DP-900 (Data Fundamentals)<br>• Microsoft PL-900 (Power Platform Fundamentals)<br>• IBM Artificial Intelligence & Power BI Internship Certifications."
       },
       {
          keywords: ["contact", "email", "phone", "reach", "hire", "linkedin", "github", "address", "pune"],
-         response: "You can contact Aradhya directly via:<br>📧 <b>Email:</b> sonararadhya@gmail.com<br>📞 <b>Phone:</b> +91 82081 36064<br>📍 <b>Location:</b> Pune, Maharashtra, India<br>🔗 <b>LinkedIn:</b> linkedin.com/in/aradhya-sonar<br>💻 <b>GitHub:</b> github.com/sonararadhya"
+         response: "📬 <b>Contact Aradhya:</b><br>📧 <b>Email:</b> sonararadhya@gmail.com<br>📞 <b>Phone:</b> +91 82081 36064<br>📍 <b>Location:</b> Pune, Maharashtra, India<br>🔗 <b>LinkedIn:</b> linkedin.com/in/aradhya-sonar<br>💻 <b>GitHub:</b> github.com/sonararadhya"
       },
       {
          keywords: ["who", "aradhya", "about", "bio", "developer"],
-         response: "Aradhya Santosh Sonar is a Full-Stack Software Developer & Data Analyst based in Pune, India. He specializes in React.js, Node.js, Python, AI application workflows, and Power BI analytics."
+         response: "👤 <b>About Aradhya Sonar:</b><br>Aradhya is a Full-Stack Web Developer & Data Analyst based in Pune, India. He builds high-performance MERN web applications, interactive Power BI data analytics solutions, and computer vision AI tools."
       }
    ];
 
@@ -1139,34 +1155,6 @@ document.addEventListener("DOMContentLoaded", () => {
       closeChatbotBtn.addEventListener("click", () => {
          chatbotContainer.classList.remove("active");
          chatbotContainer.setAttribute("aria-hidden", "true");
-      });
-   }
-
-   // Mode Tab Switching
-   jsBotTab.addEventListener("click", () => {
-      currentMode = "js";
-      jsBotTab.classList.add("active");
-      groqBotTab.classList.remove("active");
-      groqSettingsBar.style.display = "none";
-      chatStatusText.textContent = "● Mode: Local JS Bot (Instant)";
-      appendBotMessage("Switched to ⚡ <b>Local JS Bot</b> mode. Instant responses from local portfolio knowledge base!");
-   });
-
-   groqBotTab.addEventListener("click", () => {
-      currentMode = "groq";
-      groqBotTab.classList.add("active");
-      jsBotTab.classList.remove("active");
-      groqSettingsBar.style.display = "flex";
-      chatStatusText.textContent = "● Mode: Groq AI (LLaMA 3.1)";
-      appendBotMessage("Switched to 🤖 <b>Groq AI (LLaMA 3.1)</b> mode. Enter a Groq API Key above for live generative answers, or ask questions directly!");
-   });
-
-   // Save Groq API Key
-   if (saveApiKeyBtn && groqApiKeyInput) {
-      saveApiKeyBtn.addEventListener("click", () => {
-         groqApiKey = groqApiKeyInput.value.trim();
-         localStorage.setItem("groq_api_key", groqApiKey);
-         appendBotMessage(groqApiKey ? "✅ Groq API Key saved successfully!" : "⚠️ API Key cleared.");
       });
    }
 
@@ -1191,16 +1179,18 @@ document.addEventListener("DOMContentLoaded", () => {
       chatMessages.scrollTop = chatMessages.scrollHeight;
    }
 
-   // Local JS Search Engine
+   // Local JS Search Engine Fallback
    function getLocalJsResponse(query) {
-      const lower = query.toLowerCase();
+      const lower = query.toLowerCase().trim();
       let bestMatch = null;
       let maxScore = 0;
 
       LOCAL_FAQ_DB.forEach(item => {
          let score = 0;
          item.keywords.forEach(kw => {
-            if (lower.includes(kw)) score += 2;
+            if (lower.includes(kw)) {
+               score += kw.includes(" ") ? 4 : 2;
+            }
          });
          if (score > maxScore) {
             maxScore = score;
@@ -1212,52 +1202,36 @@ document.addEventListener("DOMContentLoaded", () => {
          return bestMatch;
       }
 
-      return "I can answer questions regarding Aradhya's skills, projects (Chess7Knight, NetChronaix), education, and work experience! Try asking <i>'What are his top skills?'</i> or <i>'Show me projects'</i>.";
+      return "I can answer questions regarding Aradhya's Power BI experience, projects (Chess7Knight, NetChronaix), education, and work experience! Try asking <i>'Tell me about your Power BI experience'</i> or <i>'Show me projects'</i>.";
    }
 
-   // Groq AI API Call
-   async function getGroqAiResponse(query) {
-      const systemPrompt = `You are "Aradhya AI", an intelligent assistant representing Aradhya Santosh Sonar on his portfolio website.
-Aradhya's Profile:
-- Role: Full-Stack Developer & Data Analyst based in Pune, India.
-- Key Projects: Chess7Knight (https://chess7knight.vercel.app/), NetChronaix (https://netchronaix.vercel.app/), Reunite AI, MedAI Suite.
-- Tech Stack: React.js, Node.js, Express, MongoDB Atlas, Supabase, Python, Power BI, DAX, Power Query, Microsoft Fabric, AWS, C++.
-- Education: BE IT at PES Modern College of Engineering Pune (SPPU) - CGPA 7.84 (70.90%). Diploma IT (87.19%).
-- Work: KasNet Technologies (Data Analyst Intern), Codtech IT Solutions (Web Dev Intern).
-- Contact: sonararadhya@gmail.com, +91 82081 36064.
-Answer politely, professionally, concisely, and highlight Aradhya's achievements.`;
+   let chatHistory = [];
 
-      if (!groqApiKey) {
-         return "⚠️ <b>Groq API Key missing.</b> Enter a free Groq API key in the settings bar above (from <a href='https://console.groq.com' target='_blank'>console.groq.com</a>) or switch back to ⚡ <b>Local JS Bot</b> mode for instant answers!<br><br><b>Fallback Answer:</b><br>" + getLocalJsResponse(query);
-      }
-
+   // Send Message to Secure Vercel Serverless Function /api/chat
+   async function sendChatMessageToApi(query) {
       try {
-         const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+         const res = await fetch("/api/chat", {
             method: "POST",
-            headers: {
-               "Authorization": `Bearer ${groqApiKey}`,
-               "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-               model: "llama-3.1-8b-instant",
-               messages: [
-                  { role: "system", content: systemPrompt },
-                  { role: "user", content: query }
-               ],
-               temperature: 0.7,
-               max_tokens: 300
+               message: query,
+               history: chatHistory
             })
          });
 
          const data = await res.json();
-         if (data.choices && data.choices[0] && data.choices[0].message) {
-            return data.choices[0].message.content.replace(/\n/g, "<br>");
-         } else if (data.error) {
-            return `⚠️ <b>Groq API Error:</b> ${data.error.message || "Invalid API Key or rate limit."}`;
+
+         if (res.ok && data.reply) {
+            chatHistory.push({ role: "user", content: query });
+            chatHistory.push({ role: "assistant", content: data.reply });
+            return data.reply.replace(/\n/g, "<br>");
+         } else if (data.fallback || !res.ok) {
+            console.warn("Backend API response warning/fallback:", data);
+            return getLocalJsResponse(query);
          }
       } catch (err) {
-         console.error("Groq API error:", err);
-         return "⚠️ Failed to reach Groq API. Falling back to local search:<br><br>" + getLocalJsResponse(query);
+         console.warn("Static environment or serverless route unavailable, falling back to Local JS search:", err);
+         return getLocalJsResponse(query);
       }
       return getLocalJsResponse(query);
    }
@@ -1271,20 +1245,15 @@ Answer politely, professionally, concisely, and highlight Aradhya's achievements
       appendUserMessage(text);
       chatInput.value = "";
 
-      if (currentMode === "js") {
-         const reply = getLocalJsResponse(text);
-         setTimeout(() => appendBotMessage(reply), 150);
-      } else {
-         const loadingBubble = document.createElement("div");
-         loadingBubble.className = "chatBubble botBubble";
-         loadingBubble.innerHTML = "🤖 <i>Groq LLaMA 3.1 thinking...</i>";
-         chatMessages.appendChild(loadingBubble);
-         scrollToBottom();
+      const loadingBubble = document.createElement("div");
+      loadingBubble.className = "chatBubble botBubble";
+      loadingBubble.innerHTML = "🤖 <i>Thinking...</i>";
+      chatMessages.appendChild(loadingBubble);
+      scrollToBottom();
 
-         const reply = await getGroqAiResponse(text);
-         loadingBubble.remove();
-         appendBotMessage(reply);
-      }
+      const reply = await sendChatMessageToApi(text);
+      loadingBubble.remove();
+      appendBotMessage(reply);
    });
 
    // Handle Suggestion Chips
