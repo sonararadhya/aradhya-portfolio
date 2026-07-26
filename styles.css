@@ -879,6 +879,88 @@ body {
    color: var(--accent);
 }
 
+.featuredProjectCard {
+   border: 1px solid rgba(168, 85, 247, 0.4);
+   box-shadow: 0 4px 20px rgba(168, 85, 247, 0.15);
+}
+
+.vercelBadge {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   background: rgba(16, 185, 129, 0.15);
+   color: #10b981;
+   border: 1px solid rgba(16, 185, 129, 0.3);
+   padding: 4px 10px;
+   border-radius: 20px;
+   font-size: 11px;
+   font-weight: 600;
+   margin-bottom: 12px;
+}
+
+.pulseDot {
+   width: 6px;
+   height: 6px;
+   border-radius: 50%;
+   background: #10b981;
+   box-shadow: 0 0 8px #10b981;
+   animation: pulseDotAnim 1.5s infinite;
+}
+
+@keyframes pulseDotAnim {
+   0%, 100% { transform: scale(1); opacity: 1; }
+   50% { transform: scale(1.4); opacity: 0.5; }
+}
+
+.projectImage {
+   width: 100%;
+   height: 140px;
+   object-fit: cover;
+   border-radius: 10px;
+   margin-bottom: 12px;
+}
+
+.projectBtns {
+   display: flex;
+   gap: 10px;
+   margin-top: 15px;
+}
+
+.projectBtn {
+   flex: 1;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 6px;
+   padding: 8px 12px;
+   border-radius: 8px;
+   font-size: 12px;
+   font-weight: 600;
+   text-decoration: none;
+   transition: all 0.3s ease;
+}
+
+.liveBtn {
+   background: linear-gradient(135deg, #a855f7, #6366f1);
+   color: #fff;
+}
+
+.liveBtn:hover {
+   box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+   transform: translateY(-2px);
+}
+
+.gitBtn {
+   background: rgba(255, 255, 255, 0.08);
+   color: var(--text);
+   border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.gitBtn:hover {
+   background: rgba(255, 255, 255, 0.15);
+   transform: translateY(-2px);
+}
+
 .light .projectCard:hover {
    box-shadow: 0 0 35px rgba(250, 204, 21, .95);
    border-color: #facc15;
