@@ -1136,16 +1136,26 @@
         <i class="ri-robot-line"></i>
         <div>
           <h4>Aradhya's AI Assistant</h4>
-          <span class="chatStatus">● Online & Ready</span>
+          <span class="chatStatus" id="chatStatusText">● Mode: ASK JS (Instant)</span>
         </div>
       </div>
       <button id="closeChatbotBtn" class="chatHeaderClose" aria-label="Close Chatbot">&times;</button>
     </div>
 
+    <!-- 2 Navigation Tabs: ASK JS and ASK API -->
+    <div class="chatModeTabs">
+      <button id="jsBotTab" class="chatTabBtn active" data-mode="js">
+        <i class="ri-flashlight-line"></i> ⚡ ASK JS
+      </button>
+      <button id="apiBotTab" class="chatTabBtn" data-mode="api">
+        <i class="ri-global-line"></i> 🌐 ASK API
+      </button>
+    </div>
+
     <!-- Chat Messages Scroll Area -->
     <div id="chatMessages" class="chatMessages">
       <div class="chatBubble botBubble">
-        Hi! 👋 I'm Aradhya's AI Assistant. Ask me anything about his skills, projects (Chess7Knight, NetChronaix), education, or work experience!
+        Hi! 👋 I'm Aradhya's AI Assistant. Choose between <b>⚡ ASK JS</b> (Instant local NLP) or <b>🌐 ASK API</b> (AI serverless backend) and ask me anything!
       </div>
     </div>
 

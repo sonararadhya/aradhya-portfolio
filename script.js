@@ -1089,16 +1089,11 @@ document.addEventListener("DOMContentLoaded", () => {
    const chatMessages = document.getElementById("chatMessages");
    const chatStatusText = document.getElementById("chatStatusText");
    const jsBotTab = document.getElementById("jsBotTab");
-   const groqBotTab = document.getElementById("groqBotTab");
-   const groqSettingsBar = document.getElementById("groqSettingsBar");
-   const groqApiKeyInput = document.getElementById("groqApiKeyInput");
-   const saveApiKeyBtn = document.getElementById("saveApiKeyBtn");
+   const apiBotTab = document.getElementById("apiBotTab");
 
    if (!chatbotToggleBtn || !chatbotContainer) return;
 
-   let currentMode = "js"; // "js" or "groq"
-   let groqApiKey = localStorage.getItem("groq_api_key") || "";
-   if (groqApiKeyInput && groqApiKey) groqApiKeyInput.value = groqApiKey;
+   let currentMode = "js"; // "js" or "api"
 
    // Portfolio Local Knowledge Base
    const LOCAL_FAQ_DB = [
@@ -1155,6 +1150,24 @@ document.addEventListener("DOMContentLoaded", () => {
       closeChatbotBtn.addEventListener("click", () => {
          chatbotContainer.classList.remove("active");
          chatbotContainer.setAttribute("aria-hidden", "true");
+      });
+   }
+
+   if (jsBotTab && apiBotTab) {
+      jsBotTab.addEventListener("click", () => {
+         currentMode = "js";
+         jsBotTab.classList.add("active");
+         apiBotTab.classList.remove("active");
+         if (chatStatusText) chatStatusText.textContent = "● Mode: ASK JS (Instant)";
+         appendBotMessage("Switched to ⚡ <b>ASK JS</b> mode. Instant answers from local browser NLP!");
+      });
+
+      apiBotTab.addEventListener("click", () => {
+         currentMode = "api";
+         apiBotTab.classList.add("active");
+         jsBotTab.classList.remove("active");
+         if (chatStatusText) chatStatusText.textContent = "● Mode: ASK API (Serverless)";
+         appendBotMessage("Switched to 🌐 <b>ASK API</b> mode. Connected to secure AI serverless backend!");
       });
    }
 
@@ -1245,15 +1258,20 @@ document.addEventListener("DOMContentLoaded", () => {
       appendUserMessage(text);
       chatInput.value = "";
 
-      const loadingBubble = document.createElement("div");
-      loadingBubble.className = "chatBubble botBubble";
-      loadingBubble.innerHTML = "🤖 <i>Thinking...</i>";
-      chatMessages.appendChild(loadingBubble);
-      scrollToBottom();
+      if (currentMode === "js") {
+         const reply = getLocalJsResponse(text);
+         setTimeout(() => appendBotMessage(reply), 150);
+      } else {
+         const loadingBubble = document.createElement("div");
+         loadingBubble.className = "chatBubble botBubble";
+         loadingBubble.innerHTML = "🌐 <i>Thinking...</i>";
+         chatMessages.appendChild(loadingBubble);
+         scrollToBottom();
 
-      const reply = await sendChatMessageToApi(text);
-      loadingBubble.remove();
-      appendBotMessage(reply);
+         const reply = await sendChatMessageToApi(text);
+         loadingBubble.remove();
+         appendBotMessage(reply);
+      }
    });
 
    // Handle Suggestion Chips
