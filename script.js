@@ -1207,6 +1207,12 @@ document.addEventListener("DOMContentLoaded", () => {
    // Local JS Search Engine Fallback
    function getLocalJsResponse(query) {
       const lower = query.toLowerCase().trim();
+
+      // Guardrail against general coding/program generation requests
+      if (lower.includes("add 2") || lower.includes("write code") || lower.includes("write a program") || lower.includes("code for") || lower.includes("write python") || lower.includes("solve")) {
+         return "I am Aradhya's Portfolio Assistant! My purpose is to answer questions about Aradhya's skills, projects (Chess7Knight, NetChronaix), education, and work experience. Feel free to ask about his technical expertise!";
+      }
+
       let bestMatch = null;
       let maxScore = 0;
 
