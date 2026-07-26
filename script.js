@@ -1098,11 +1098,23 @@ document.addEventListener("DOMContentLoaded", () => {
    // Portfolio Local Knowledge Base
    const LOCAL_FAQ_DB = [
       {
-         keywords: ["power bi", "dax", "power query", "fabric", "kasnet", "data analyst", "data analytics", "dashboard"],
+         keywords: ["azure", "cloud", "az-900", "ai-900", "dp-900", "pl-900", "microsoft certified", "aws"],
+         response: "☁️ <b>Microsoft Azure & Cloud Expertise:</b><br>• <b>Microsoft Certified: Azure AI Fundamentals (AI-900)</b><br>• <b>Microsoft Certified: Azure Fundamentals (AZ-900)</b><br>• <b>Microsoft Certified: Azure Data Fundamentals (DP-900)</b><br>• <b>Microsoft Certified: Power Platform Fundamentals (PL-900)</b><br>• Experienced in connecting Azure cloud datasets with Power BI, SQL databases, and serverless hosting on Vercel/AWS."
+      },
+      {
+         keywords: ["power bi", "dax", "power query", "fabric", "kasnet", "data analyst", "data analytics", "dashboard", "analytics", "bi"],
          response: "📊 <b>Aradhya's Power BI & Data Analytics Experience:</b><br>• <b>Role:</b> Data Analyst Intern at KasNet Technologies Pvt. Ltd.<br>• <b>Key Achievements:</b><br> 1. Designed interactive executive dashboards analyzing complex business metrics.<br> 2. Authored custom <b>DAX measures</b> & optimized <b>Power Query ETL</b> pipelines.<br> 3. Reduced data preprocessing time by 30% through automated data models.<br> 4. Hands-on experience with <b>Microsoft Fabric</b> and SQL database integrations.<br>• <b>Certifications:</b> PL-900, DP-900, and Power BI Internship Certificate."
       },
       {
-         keywords: ["chess7knight", "chess", "mcts", "elo", "board"],
+         keywords: ["r", "r programming", "r language", "statistics", "statistical"],
+         response: "📈 <b>R Programming & Statistics Knowledge:</b><br>Aradhya has foundational academic knowledge of R programming for statistical data analysis and data visualization (ggplot2, dplyr). His primary production projects are built using Python (OpenCV, PyTorch) and JavaScript/React."
+      },
+      {
+         keywords: ["python", "reunite ai", "medai", "opencv", "insightface", "machine learning", "ml", "ai"],
+         response: "🐍 <b>Python & AI/ML Projects:</b><br>• <b>Reunite AI:</b> Facial recognition pipeline built with OpenCV & InsightFace for missing person identification.<br>• <b>MedAI Suite:</b> Medical image classification platform using Python, PyTorch, Scikit-Learn, and FastAPI."
+      },
+      {
+         keywords: ["chess7knight", "chess", "mcts", "elo", "board", "stockfish"],
          response: "♟️ <b>Chess7Knight Project:</b><br>• Full-Stack interactive MERN chess app deployed at <a href='https://chess7knight.vercel.app/' target='_blank'>chess7knight.vercel.app</a>.<br>• Features custom board textures, 20+ puzzles, stockfish-assisted post-game review, and real-time ELO progression system."
       },
       {
@@ -1118,19 +1130,19 @@ document.addEventListener("DOMContentLoaded", () => {
          response: "💼 <b>Aradhya's Work Experience:</b><br>1. <b>KasNet Technologies:</b> Data Analyst Intern — Power BI dashboards, DAX, Power Query ETL pipelines.<br>2. <b>Codtech IT Solutions:</b> Web Development Intern — RESTful APIs, MERN Stack, Supabase backend & CI/CD.<br>3. <b>Om Multitherm Engineers:</b> Database validation & system administration."
       },
       {
-         keywords: ["education", "college", "degree", "cgpa", "sppu", "modern college", "pesmcoe", "diploma"],
+         keywords: ["education", "college", "degree", "cgpa", "sppu", "modern college", "pesmcoe", "diploma", "awasari"],
          response: "🎓 <b>Aradhya's Education:</b><br>• <b>B.E. in Information Technology:</b> PES Modern College of Engineering, Pune (SPPU) | <b>CGPA: 7.84 (70.90%)</b><br>• <b>Diploma in IT:</b> Government Polytechnic, Awasari Pune | <b>87.19%</b>"
       },
       {
-         keywords: ["skill", "skills", "tech", "stack", "react", "python", "javascript", "node", "express", "sql"],
-         response: "💻 <b>Aradhya's Core Tech Stack:</b><br>• <b>Languages:</b> Python, JavaScript, TypeScript, C++, Java, SQL<br>• <b>Frontend:</b> React.js, Next.js, HTML5, CSS3, Tailwind CSS<br>• <b>Backend:</b> Node.js, Express.js, FastAPI, REST APIs<br>• <b>Data & Analytics:</b> Power BI, DAX, Power Query, Microsoft Fabric, OpenCV, Scikit-Learn<br>• <b>Databases & Cloud:</b> Supabase, MongoDB, AWS, Git."
+         keywords: ["skill", "skills", "tech", "stack", "react", "mern", "node", "express", "sql", "c++", "javascript", "frontend", "backend"],
+         response: "💻 <b>Aradhya's Core Tech Stack:</b><br>• <b>Languages:</b> Python, JavaScript, TypeScript, C++, Java, SQL<br>• <b>Frontend:</b> React.js, Next.js, HTML5, CSS3, Tailwind CSS<br>• <b>Backend:</b> Node.js, Express.js, FastAPI, REST APIs<br>• <b>Data & Analytics:</b> Power BI, DAX, Power Query, Microsoft Fabric, OpenCV, Scikit-Learn<br>• <b>Databases & Cloud:</b> Supabase, MongoDB, AWS, Azure, Git."
       },
       {
-         keywords: ["certificate", "certifications", "certified", "microsoft", "az-900", "ai-900", "dp-900", "pl-900"],
-         response: "📜 <b>Certifications & Credentials:</b><br>• Microsoft AI-900 (Azure AI Fundamentals)<br>• Microsoft AZ-900 (Azure Fundamentals)<br>• Microsoft DP-900 (Data Fundamentals)<br>• Microsoft PL-900 (Power Platform Fundamentals)<br>• IBM Artificial Intelligence & Power BI Internship Certifications."
+         keywords: ["certificate", "certifications", "certified", "ibm"],
+         response: "📜 <b>Certifications & Credentials:</b><br>• Microsoft Certified: Azure AI Fundamentals (AI-900)<br>• Microsoft Certified: Azure Fundamentals (AZ-900)<br>• Microsoft Certified: Azure Data Fundamentals (DP-900)<br>• Microsoft Certified: Power Platform Fundamentals (PL-900)<br>• IBM Artificial Intelligence & Power BI Internship Certifications."
       },
       {
-         keywords: ["contact", "email", "phone", "reach", "hire", "linkedin", "github", "address", "pune"],
+         keywords: ["contact", "email", "phone", "reach", "hire", "linkedin", "github", "address", "pune", "resume"],
          response: "📬 <b>Contact Aradhya:</b><br>📧 <b>Email:</b> sonararadhya@gmail.com<br>📞 <b>Phone:</b> +91 82081 36064<br>📍 <b>Location:</b> Pune, Maharashtra, India<br>🔗 <b>LinkedIn:</b> linkedin.com/in/aradhya-sonar<br>💻 <b>GitHub:</b> github.com/sonararadhya"
       },
       {
